@@ -50,3 +50,6 @@ HOMEPAGE : https://www.robofrien.com/
 BLOG : https://blog.naver.com/inc_robo
 
 YOUTUBE : https://www.youtube.com/channel/UCtsx-Lch2rG-ziyzGlk2AJQ
+  
+  
+메일 문의 : robofrien@gmail.com
