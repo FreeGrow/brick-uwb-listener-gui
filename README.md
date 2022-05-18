@@ -33,7 +33,7 @@ Visual studio 2019 - C# project
 # InfoPage
 설명 페이지  
   
-<img src="https://user-images.githubusercontent.com/102004343/168957189-813363d9-a6ac-42f1-81dd-41dbfae3c386.png"  width="300" >
+<img src="https://user-images.githubusercontent.com/102004343/168959539-9f55d252-d9d0-4667-acae-283927bb60b5.png"  width="300" >
 
 
 
