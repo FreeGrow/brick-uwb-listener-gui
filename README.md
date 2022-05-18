@@ -6,7 +6,7 @@ UWB_Listener
 Visual studio 2019 - C# project
 
 # CommunitePage
-<img src="https://user-images.githubusercontent.com/102004343/168957189-813363d9-a6ac-42f1-81dd-41dbfae3c386.png"  width="700" height="370">
+<img src="https://user-images.githubusercontent.com/102004343/168957189-813363d9-a6ac-42f1-81dd-41dbfae3c386.png"  width="600" >
 
 # FilterPage
 ![ㄴ2](https://user-images.githubusercontent.com/102004343/168957191-5e5abf8c-ca62-429b-96c7-9cbdfed9a86c.png)
