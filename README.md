@@ -1,11 +1,16 @@
 # UWB_Listener
-(주)로보프렌 에서 개발한 리스너용 UWB 통신 프로그램입니다.  
-자사 제품인 UWB LISTENER 제품과 ANCHOR, TAG 제품을 이용해야만 사용가능합니다.
+>(주)로보프렌 에서 개발한 리스너용 UWB 통신 프로그램입니다.  
+>자사 제품인 UWB LISTENER 제품과 ANCHOR, TAG 제품을 이용해야만 사용가능합니다.
 
 
 
 # wpf_UWB_GUI
-Visual studio 2019 - C# project
+>Visual studio 2019 - C# project
+>.NET Framework 4.6.1
+>Version 16.8.3
+  
+  
+  
 
 # CommunitePage
 통신 설정 페이지  
