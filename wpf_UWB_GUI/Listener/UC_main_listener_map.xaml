@@ -1,0 +1,96 @@
+﻿<Page x:Name="listener_Map_Page" x:Class="wpf_UWB_GUI.UC_main_listener_map"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="#FF707070"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
+      KeepAlive="True"
+        xmlns:local="clr-namespace:wpf_UWB_GUI"
+        mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Width="838" Height="624" Loaded="UC_main_listener_map_Loaded" MouseDown="listener_Map_Page_MouseDown" MouseLeave="listener_Map_Page_MouseLeave" MouseMove="listener_Map_Page_MouseMove" MouseUp="listener_Map_Page_MouseUp" MouseWheel="listener_Map_Page_MouseWheel" SizeChanged="listener_Map_Page_SizeChagned">
+    <Grid HorizontalAlignment="Left" Width="838" Background="#FF101213" Height="624">
+        <Label Content="Status :" HorizontalAlignment="Left" Margin="578,24,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="20" />
+        <Label x:Name="label_connect_status" Content="Connected" HorizontalAlignment="Left" Margin="698,24,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="#FF53FF53" FontSize="20"/>
+        <Image x:Name="img_connect_status" HorizontalAlignment="Left" Height="17" Margin="674,32,0,0" VerticalAlignment="Top" Width="15" Source="/Resources/img_connected.png" Stretch="Fill"/>
+        <Image x:Name="btn_sync" Stretch="Fill" Source="/Resources/img_sync.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="15" Height="20" Margin="551,30,0,0" />
+        <Label x:Name="label" Content="Map Size" HorizontalAlignment="Left" Margin="34,80,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="16"/>
+        <CheckBox x:Name="chk_device" Content="" HorizontalAlignment="Left" Margin="413,77,0,0" VerticalAlignment="Top" BorderBrush="#FF008EFF" Foreground="#DDFFFFFF" FontSize="13" IsChecked="False">
+            <CheckBox.Resources>
+                <!--Unchecked state-->
+                <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="#FF707070"/>
+                <!--Checked state-->
+                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#FF53FF53"/>
+            </CheckBox.Resources>
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="1.8" ScaleY="1.8" />
+            </CheckBox.LayoutTransform>
+        </CheckBox>
+        <Label Content="Device S/N" HorizontalAlignment="Left" Margin="447,82,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="12" FontFamily="Artifakt Element Light" MouseDown="label_device_MouseDown"/>
+        <Button x:Name="btn_filepath" Content="맵 파일 위치" HorizontalAlignment="Left" Margin="34,20,0,0" VerticalAlignment="Top" Width="92" FontFamily="Artifakt Element Light" Background="#FF1457ED" BorderBrush="#FF1457ED" Style="{StaticResource RoundButtonTemplate}" Height="36" Click="btn_filePath_Click"/>
+        <TextBox x:Name="textBox_filepath" HorizontalAlignment="Left" Height="23" Margin="139,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="393" Foreground="#FF6B6C6D" SelectionBrush="#FF008DFF" BorderBrush="#FF6B6C6D" IsReadOnly="True"/>
+        <Label x:Name="label_none_Copy" Content="Width(m) :" HorizontalAlignment="Left" Margin="111,82,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="12" FontFamily="Artifakt Element Light"/>
+        <Border BorderThickness="1" BorderBrush="#FF707070" CornerRadius="8" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="183,80,586,517" Width="69" Height="27">
+            <TextBox x:Name="txtfield_width" materialDesign:HintAssist.Hint="0" BorderThickness="0" BorderBrush="#89FFFFFF" Foreground="#DDFFFFFF" HorizontalAlignment="Center" CaretBrush="White"/>
+        </Border>
+        <Label Content="Height(m) :" HorizontalAlignment="Left" Margin="257,82,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="12" FontFamily="Artifakt Element Light"/>
+        <Border BorderThickness="1" BorderBrush="#FF707070" CornerRadius="8" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="334,80,435,517" Width="69" Height="27">
+            <TextBox x:Name="txtfield_height" materialDesign:HintAssist.Hint="0" BorderThickness="0" BorderBrush="#89FFFFFF" Foreground="#DDFFFFFF" HorizontalAlignment="Center" CaretBrush="White"/>
+        </Border>
+        <CheckBox x:Name="chk_name" Content="" HorizontalAlignment="Left" Margin="517,77,0,0" VerticalAlignment="Top" BorderBrush="#FF008EFF" Foreground="#DDFFFFFF" FontSize="13" IsChecked="False">
+            <CheckBox.Resources>
+                <!--Unchecked state-->
+                <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="#FF707070"/>
+                <!--Checked state-->
+                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#FF53FF53"/>
+            </CheckBox.Resources>
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="1.8" ScaleY="1.8" />
+            </CheckBox.LayoutTransform>
+        </CheckBox>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="551,82,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="12" FontFamily="Artifakt Element Light" MouseDown="label_name_MouseDown"/>
+        <CheckBox x:Name="chk_position" Content="" HorizontalAlignment="Left" Margin="593,77,0,0" VerticalAlignment="Top" BorderBrush="#FF008EFF" Foreground="#DDFFFFFF" FontSize="13" IsChecked="False">
+            <CheckBox.Resources>
+                <!--Unchecked state-->
+                <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="#FF707070"/>
+                <!--Checked state-->
+                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#FF53FF53"/>
+            </CheckBox.Resources>
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="1.8" ScaleY="1.8" />
+            </CheckBox.LayoutTransform>
+        </CheckBox>
+        <Label Content="Position" HorizontalAlignment="Left" Margin="627,82,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="12" FontFamily="Artifakt Element Light" MouseDown="label_position_MouseDown"/>
+        <CheckBox x:Name="chk_filter" Content="" HorizontalAlignment="Left" Margin="685,77,0,0" VerticalAlignment="Top" BorderBrush="#FF008EFF" Foreground="#DDFFFFFF" FontSize="13" IsChecked="False">
+            <CheckBox.Resources>
+                <!--Unchecked state-->
+                <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="#FF707070"/>
+                <!--Checked state-->
+                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#FF53FF53"/>
+            </CheckBox.Resources>
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="1.8" ScaleY="1.8" />
+            </CheckBox.LayoutTransform>
+        </CheckBox>
+        <Label Content="Filtered Data" HorizontalAlignment="Left" Margin="719,82,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="12" FontFamily="Artifakt Element Light" MouseDown="label_filtered_MouseDown"/>
+
+        <Border x:Name="mMapViewLayout1"  HorizontalAlignment="Left" VerticalAlignment="Top"  Background="White" BorderBrush="#FF101213" BorderThickness="1" Height="494" Margin="0,120,0,0" CornerRadius="10,10,10,10">
+            <Grid x:Name="mMapViewLayout" Height="473" Width="838" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"  >
+                <Button x:Name="btn_zoom_fit" Content="Fit" Panel.ZIndex="1" Margin="740,40,33,0" VerticalAlignment="Top" Height="30" Background="#FF1457ED" BorderBrush="{x:Null}" Click="btn_zoom_fit_click"/>
+                <Button x:Name="btn_zoom_plus" Content="+" Panel.ZIndex="1" Margin="740,80,33,0" VerticalAlignment="Top" Height="30" Background="#FF1457ED" Click="btn_zoom_plus_click" BorderBrush="{x:Null}"/>
+                <Button x:Name="btn_zoom_minus" Content="-" Panel.ZIndex="1" Margin="740,120,33,0" VerticalAlignment="Top" Height="30" Background="#FF1457ED" Click="btn_zoom_minus_click" BorderBrush="{x:Null}"/>
+            </Grid>
+        </Border>
+        <Label x:Name="label_tagCount" Content="T :" HorizontalAlignment="Left" Margin="751,300,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FF1457ED" FontSize="20" />
+        <Label x:Name="label_anchorCount" Content="A :" HorizontalAlignment="Left" Margin="751,342,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FF1457ED" FontSize="20" />
+    </Grid>
+</Page>
