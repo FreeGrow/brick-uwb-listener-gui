@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using wpf_UWB_GUI.Listener;
-using static wpf_UWB_GUI.UC_Menu_gateway;
 using static wpf_UWB_GUI.UC_Menu_listener;
 
 namespace wpf_UWB_GUI
@@ -62,16 +61,7 @@ namespace wpf_UWB_GUI
         public static Frame _frame_listener_filter;
 
         //MENU BAR
-        UC_Menu_gateway ucMenuGateway = new UC_Menu_gateway();
         UC_Menu_listener ucMenuListener = new UC_Menu_listener();
-
-        //GATEWAY MAIN PAGE
-        UC_main_gateway_com ucMainGatewayCom = new UC_main_gateway_com();
-        UC_main_gateway_filter ucMainGatewayFilter = new UC_main_gateway_filter();
-        UC_main_gateway_device ucMainGatewayDevice = new UC_main_gateway_device();
-        UC_main_gateway_map ucMainGatewayMap = new UC_main_gateway_map();
-        UC_main_gateway_setting ucMainGatewaySetting = new UC_main_gateway_setting();
-        UC_main_gateway_info ucMainGatewayInfo = new UC_main_gateway_info();
 
         //LISTENER MAIN PAGE
         UC_main_listener_com ucMainListenerCom = new UC_main_listener_com();
@@ -95,6 +85,8 @@ namespace wpf_UWB_GUI
         public MainWindow()
         {
             InitializeComponent();
+
+            //Properties.Settings.Default.Reset();
         }
 
         private void MainForm_Loaded(object sender, RoutedEventArgs e)
@@ -109,7 +101,6 @@ namespace wpf_UWB_GUI
             timer10hz.Tick += new EventHandler(timer10hz_Tick);
             timer10hz.Start();
 
-            ucMenuGateway.setGatewayMenuButton += new MainGetMenuGatewayDataEventHandler(this.setGatewayMenuButton);
             ucMenuListener.setListenerMenuButton += new MainGetMenuListenerDataEventHandler(this.setListenerMenuButton);
 
             tabBarLayout.Children.Clear();
@@ -147,6 +138,10 @@ namespace wpf_UWB_GUI
         {
             Console.WriteLine("setSerialHandler()");
             serialConnect = mSerial;
+
+            if (serialConnect == null) return;
+            if (serialConnect.fConnectState())
+                serialConnect.sp_EnterTwice();
         }
 
         private void clickAutoAnchor()
@@ -299,13 +294,6 @@ namespace wpf_UWB_GUI
         {
             tabBarLayout.Children.Clear();
 
-            if (state == StateTitleGateway)
-            {
-                //btn_mode_gateway.Background = new SolidColorBrush(titleSelectColor);
-                btn_mode_listener.Background = new SolidColorBrush(titleUnSelectColor);
-
-                tabBarLayout.Children.Add(ucMenuGateway);
-            }
             if (state == StateTitleListener)
             {
                 //btn_mode_gateway.Background = new SolidColorBrush(titleUnSelectColor);

@@ -107,12 +107,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="class_deviceList.cs" />
-    <Compile Include="class_DevName.cs" />
     <Compile Include="class_filter.cs" />
     <Compile Include="class_Marker.cs" />
     <Compile Include="config.cs" />
-    <Compile Include="Function.cs" />
     <Compile Include="Listener\class_listener_list.cs" />
     <Compile Include="Listener\DeviceAddWindow.xaml.cs">
       <DependentUpon>DeviceAddWindow.xaml</DependentUpon>
@@ -140,42 +137,14 @@
     <Compile Include="Listener\UC_main_listener_map.xaml.cs">
       <DependentUpon>UC_main_listener_map.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Trilateration.cs" />
     <Compile Include="Listener\UC_main_listener_filter.xaml.cs">
       <DependentUpon>UC_main_listener_filter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Listener\UC_main_listener_com.xaml.cs">
       <DependentUpon>UC_main_listener_com.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Gateway\UC_main_gateway_info.xaml.cs">
-      <DependentUpon>UC_main_gateway_info.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Gateway\UC_main_gateway_setting.xaml.cs">
-      <DependentUpon>UC_main_gateway_setting.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Gateway\UC_main_gateway_map.xaml.cs">
-      <DependentUpon>UC_main_gateway_map.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Gateway\UC_main_gateway_device.xaml.cs">
-      <DependentUpon>UC_main_gateway_device.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Gateway\UC_main_gateway_filter.xaml.cs">
-      <DependentUpon>UC_main_gateway_filter.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Listener\UC_Menu_listener.xaml.cs">
       <DependentUpon>UC_Menu_listener.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Gateway\UC_Menu_gateway.xaml.cs">
-      <DependentUpon>UC_Menu_gateway.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UC_device_list_item.xaml.cs">
-      <DependentUpon>UC_device_list_item.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UC_device_name_Control.xaml.cs">
-      <DependentUpon>UC_device_name_Control.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Gateway\UC_main_gateway_com.xaml.cs">
-      <DependentUpon>UC_main_gateway_com.xaml</DependentUpon>
     </Compile>
     <Page Include="Dictionary1.xaml">
       <SubType>Designer</SubType>
@@ -234,50 +203,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Gateway\UC_main_gateway_info.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Gateway\UC_main_gateway_setting.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Gateway\UC_main_gateway_map.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Gateway\UC_main_gateway_device.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Gateway\UC_main_gateway_filter.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Listener\UC_Menu_listener.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Gateway\UC_Menu_gateway.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UC_device_list_item.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UC_device_name_Control.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Gateway\UC_main_gateway_com.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MqttConnect.cs" />
-    <Compile Include="MqttParsing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -329,9 +260,6 @@
     <Resource Include="Resources\status_on.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\default.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -366,9 +294,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\img_setting.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="img_arrow_L.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\img_arrowl.png" />

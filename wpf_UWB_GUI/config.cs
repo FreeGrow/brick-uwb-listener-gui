@@ -11,7 +11,8 @@ namespace wpf_UWB_GUI
 
         public static DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-        public static int Alive_TAG = 60 * 1000 * 1;
+        public static int Alive_TAG = 1000 * 10;
+        //public static int Alive_TAG = 60 * 1000 * 1;
         public static int Alive_ANCHOR = 60 * 1000 * 1;
         public static int Alive_GATEWAY = 60 * 1000 * 1;
 

@@ -35,6 +35,8 @@ namespace wpf_UWB_GUI
 
         public listener_mqttConnect sp_mqttConnect;
 
+        long prevMillis = 0;
+
 
         public UC_main_listener_com()
         {
@@ -71,6 +73,17 @@ namespace wpf_UWB_GUI
                         sp_mqttConnect.clearList();
                     }
                 }
+            }
+
+            if ((long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds - prevMillis > 1000 * 1)
+            {
+                prevMillis = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
+
+                var portnames = SerialPort.GetPortNames();
+
+                for (int i = 0; i < portnames.Length; i++)
+                    if (cbx_serialPort.Items.IndexOf(portnames[i]) == -1)
+                        cbx_serialPort.Items.Add(portnames[i]);
             }
         }
 

@@ -8,6 +8,8 @@ namespace wpf_UWB_GUI.Listener
     {
 
         public listener_mqttConnect.retryAnchorHandler retryAnchor;
+        public listener_mqttConnect.systemInfoHandler systemInfo;
+        public listener_mqttConnect.lecSendHandler lecSend;
 
         DispatcherTimer timer10hz = new DispatcherTimer();
         String strReceiveData = "";
@@ -23,137 +25,177 @@ namespace wpf_UWB_GUI.Listener
             timer10hz.Interval = TimeSpan.FromMilliseconds(0.01);
             timer10hz.Tick += new EventHandler(timer10hz_Tick);
             timer10hz.Start();
+
         }
+
+        List<String> getSerialData = new List<string>();
 
 
         public void sp_listener_DataReceivedHandler(String receiveData)
         {
-            strReceiveData += receiveData;
+            getSerialData.Add(receiveData);
+
+            //Console.WriteLine(" sp_listener_DataReceivedHandler : " + receiveData);
         }
 
         bool f_LaStart = false;
         long prevLaStartMillis = 0;
+        bool fSystemInfo = false;
+        long prevSystemInfoMillis = 0;
+        String prevStrReceiveData = "";
+
+        bool fGetPos = false;
 
         private void timer10hz_Tick(object sender, EventArgs e)
         {
-            if (strReceiveData.Length == 0) return;
+            //return;
+            //if (!fGetPos)
+            //{
+            //    if (strReceiveData.Length != prevStrReceiveData.Length)
+            //    {
+            //        prevSystemInfoMillis = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
+            //    }
 
-            if (strReceiveData.Contains("la"))
+            //    if ((long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds - prevSystemInfoMillis > 1000 * 5)
+            //    {
+            //        prevSystemInfoMillis = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
+            //        Console.WriteLine("send Lec Check : ");
+            //        lecSend();
+            //    }
+
+            //    prevStrReceiveData = strReceiveData;
+            //}
+
+
+            //if (strReceiveData.Length == 0) return;
+
+
+            //POS,0,0200,0.08,3.25,-1.05,58,x0D
+            //POS,0,0200,0.09,3.24,-1.06,57,x0D
+            //POS,0,0200,0.07,3.26,-1.04,56,x0D
+            //POS,0,0200,0.11,3.24,-1.10,57,x0D
+            //POS,0,0200,0.10,3.24,-1.14,53,x0D
+            //POS,0,0200,nan,nan,nan,0,x0D
+            //POS,0,0200,0.11,3.25,-1.12,59,x0D
+
+            if (getSerialData.Count < 1)
             {
-                f_LaStart = true;
+                return;
             }
 
-            if ((long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds - prevLaStartMillis > 1000 * 3)
+            Console.WriteLine(getSerialData[0]);
+            String strParse = getSerialData[0];
+            getSerialData.RemoveAt(0);
+
+            if (strParse.Contains("POS,"))
             {
-                //Time OUT
-                strReceiveData = "";
-                f_LaStart = false;
+                parseData(strParse);
             }
 
-            if (strReceiveData.Contains("dwm>"))
+
+
+            //SYSTEM INFO UART
+            //if (strReceiveData.Contains("dwm>") && fSystemInfo == false)
+            //{
+            //    Console.WriteLine("strReceiveData.Contains(dwm > )");
+            //    fSystemInfo = true;
+            //    systemInfo();
+            //    strReceiveData = "";
+            //}
+
+            //if (fSystemInfo)
+            //{
+            //    Console.WriteLine("fSystemInfo : " + strReceiveData.Length + " :: " + prevStrReceiveData.Length);
+            //    if(strReceiveData.Length != prevStrReceiveData.Length)
+            //    {
+            //        prevSystemInfoMillis = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
+            //    }
+
+            //    if((long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds - prevSystemInfoMillis > 1000 * 5)
+            //    {
+            //        Console.WriteLine("strReceiveData : ");
+            //        Console.WriteLine(strReceiveData);
+
+            //        strReceiveData = "";
+            //        //fSystemInfo = false;
+            //    }
+
+            //    prevStrReceiveData = strReceiveData;
+
+            //    //[000003.420 INF] sys: fw2 fw_ver = x01030001 cfg_ver = x00010700
+            //    //[000003.420 INF] uwb0: panid = xD438 addr = xDECA3F7657B15DA0
+            //    //[000003.430 INF] mode: an(pasv, -)
+            //    //[000003.430 INF] uwbmac: connected
+            //    //[000003.430 INF] uwbmac: bh disconnected
+            //    //[000003.440 INF] cfg: sync = 0 fwup = 0 ble = 1 leds = 0 init = 0 upd_rate_stat = 120 label = DW5DA0
+            //    //[000003.440 INF] enc: off
+            //    //[000003.450 INF] ble: addr = D2:D7: 65:DB: 99:E4
+
+            //    return;
+            //}
+
+
+            //SET ANCHOR
+            //0) id = 0000000000008117 seat = 5 seens = 220 rssi = -92 cl = 00000000 nbr = 00000000 pos = 5.90:0.00:0.00
+            if (strParse.IndexOf("id=") != -1 &&
+                strParse.IndexOf("seat=") != -1 &&
+                strParse.IndexOf("seens=") != -1 &&
+                strParse.IndexOf("rssi=") != -1 &&
+                strParse.IndexOf("cl=") != -1 &&
+                strParse.IndexOf("nbr=") != -1 &&
+                strParse.IndexOf("pos=") != -1)
             {
-                if (strReceiveData.IndexOf("la") != -1)
+                Console.WriteLine("get Anchor () ");
+
+                class_listener_list clTmp = new class_listener_list();
+                clTmp.devSN = "DW" + strParse.Substring(strParse.IndexOf("id=") + 15, 4);
+
+                String strPos = strParse.Substring(strParse.IndexOf("pos=") + 4);
+                String[] initPos = strPos.Split(':');
+
+                clTmp.time = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
+                clTmp.devType = "Anchor";
+                clTmp.devTagName = "Unknown";
+                clTmp.tag_pos_x = Double.Parse(initPos[0]);
+                clTmp.tag_pos_y = Double.Parse(initPos[1]);
+                clTmp.tag_pos_z = Double.Parse(initPos[2]);
+
+                int resultAnchor = listAnchor.FindIndex(x => x.devSN.Equals(clTmp.devSN));
+                if (resultAnchor == -1)
                 {
-                    String strAnchorText = "";
-
-                    try
-                    {
-                        strAnchorText = strReceiveData.Substring(strReceiveData.IndexOf("la"), strReceiveData.IndexOf("dwm>") - strReceiveData.IndexOf("la"));
-                    }
-                    catch (Exception e1)
-                    {
-                        return;
-                    }
-
-                    strReceiveData = strReceiveData.Substring(strReceiveData.IndexOf("dwm>") + 4);
-
-                    String[] strSplit = strAnchorText.Split('\n');
-
-                    for (int i = 0; i < strSplit.Length; i++)
-                    {
-                        if (strSplit[i].IndexOf("id=") != -1 &&
-                            strSplit[i].IndexOf("seat=") != -1 &&
-                            strSplit[i].IndexOf("seens=") != -1 &&
-                            strSplit[i].IndexOf("map=") != -1 &&
-                            strSplit[i].IndexOf("pos=") != -1)
-                        {
-                            try
-                            {
-                                //Console.WriteLine("strSplit : " + strSplit[i]);
-
-                                class_listener_list clTmp = new class_listener_list();
-                                clTmp.devSN = "DW" + strSplit[i].Substring(strSplit[i].IndexOf("id=") + 15, 4);
-
-                                String strPos = strSplit[i].Substring(strSplit[i].IndexOf("pos=") + 4);
-                                String[] initPos = strPos.Split(':');
-
-                                clTmp.time = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
-                                clTmp.devType = "Anchor";
-                                clTmp.devTagName = "Unknown";
-                                clTmp.tag_pos_x = Double.Parse(initPos[0]);
-                                clTmp.tag_pos_y = Double.Parse(initPos[1]);
-                                clTmp.tag_pos_z = Double.Parse(initPos[2]);
-
-                                int resultAnchor = listAnchor.FindIndex(x => x.devSN.Equals(clTmp.devSN));
-                                if (resultAnchor == -1)
-                                {
-                                    listAnchor.Add(clTmp);
-                                }
-                                else
-                                {
-                                    class_listener_list clDevice = listAnchor.Find(x => x.devSN.Equals(clTmp.devSN));
-                                    clDevice.devTagName = "Unknown";
-                                    clDevice.tag_pos_x = clTmp.tag_pos_x;
-                                    clDevice.tag_pos_y = clTmp.tag_pos_y;
-                                    clDevice.tag_pos_z = clTmp.tag_pos_z;
-                                    clDevice.time = clTmp.time;
-                                }
-                            }
-                            catch (Exception e1)
-                            {
-                                Console.WriteLine("Error : " + e1.ToString());
-                            }
-                        }
-                    }
+                    listAnchor.Add(clTmp);
                 }
                 else
                 {
-                    retryAnchor();
+                    class_listener_list clDevice = listAnchor.Find(x => x.devSN.Equals(clTmp.devSN));
+                    clDevice.devTagName = "Unknown";
+                    clDevice.tag_pos_x = clTmp.tag_pos_x;
+                    clDevice.tag_pos_y = clTmp.tag_pos_y;
+                    clDevice.tag_pos_z = clTmp.tag_pos_z;
+                    clDevice.time = clTmp.time;
                 }
-                f_LaStart = false;
             }
 
-            if (f_LaStart)
+        }
+
+
+        //GET POS DATA PARSING
+        //POS,0,0200,0.11,3.25,-1.12,59,x0D
+        private void parseData(String mStr)
+        {
+            int cntChk = mStr.Split(',').Length - 1;
+            if (cntChk != 7)
             {
                 return;
             }
 
-            prevLaStartMillis = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
-
-            if (strReceiveData.IndexOf('P') != -1)
-                strReceiveData = strReceiveData.Substring(strReceiveData.IndexOf('P'));
-            if (strReceiveData.IndexOf('P') < 0 || strReceiveData.IndexOf('\n') < 0)
-                return;
-
-            String strTmp2 = strReceiveData.Substring(strReceiveData.IndexOf('P'), strReceiveData.IndexOf('\n') + 1);
-
-            //Console.WriteLine("strTmp2 : " + strTmp2);
-
-            parseData(strTmp2);
-
-            strReceiveData = strReceiveData.Substring(strReceiveData.IndexOf('\n') + 1);
-        }
-
-        private void parseData(String mStr)
-        {
             char[] split1 = { ',' };
             string[] result = mStr.Split(split1);
 
-            if (result.Length != 8) return;
-            if (result[2].Length != 4) return;
+            //if (result.Length != 8) return;
+            //if (result[2].Length != 4) return;
 
             int num_result_Tag = cl_devList.FindIndex(x => x.devSN.Equals("DW" + result[2]));
-            //Console.WriteLine("num_result_Tag : " + num_result_Tag);
 
             if (num_result_Tag != -1)
             {
@@ -317,6 +359,7 @@ namespace wpf_UWB_GUI.Listener
                 tmpListener.time = (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
 
                 cl_devList.Add(tmpListener);
+                fGetPos = true;
             }
 
         }

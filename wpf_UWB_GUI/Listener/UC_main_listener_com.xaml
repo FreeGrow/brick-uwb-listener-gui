@@ -23,11 +23,11 @@
         <Label x:Name="label_connect_status" Content="Connected" HorizontalAlignment="Left" Margin="698,24,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="#FF53FF53" FontSize="20"/>
         <Image x:Name="img_connect_status" HorizontalAlignment="Left" Height="17" Margin="674,32,0,0" VerticalAlignment="Top" Width="15" Source="/Resources/img_connected.png" Stretch="Fill"/>
         <Image x:Name="btn_sync" Stretch="Fill" Source="/Resources/img_sync.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="15" Height="20" Margin="551,30,0,0" />
-        <Label x:Name="label" Content="RTLS Listener Information" HorizontalAlignment="Left" Margin="34,82,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="23"/>
-        <Button x:Name="connected_btn" Content="START" HorizontalAlignment="Left" Margin="574,160,0,0" VerticalAlignment="Top" Width="97" FontFamily="Artifakt Element Light" Background="#FF1457ED" BorderBrush="#FF1457ED" Style="{StaticResource RoundButtonTemplate}" Height="42" Click="connected_btn_Click"/>
-        <Button x:Name="stop_btn" Content="STOP" HorizontalAlignment="Left" Margin="686,160,0,0" VerticalAlignment="Top" Width="96" FontFamily="Artifakt Element Light" Background="#FF25262A" BorderBrush="#FF25262A" Style="{StaticResource RoundButtonTemplate}" Height="42" Click="stop_btn_Click"/>
-        <Label x:Name="label_Copy6" Content="SERIAL PORT : " HorizontalAlignment="Left" Margin="34,160,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
-        <ComboBox x:Name="cbx_serialPort" HorizontalAlignment="Left" Margin="185,165,0,0" VerticalAlignment="Top" Width="93" BorderBrush="White" Foreground="#FF1457ED" Background="#FF101213" FontWeight="Bold" FontSize="15" MouseWheel="cbx_serialPort_MouseWheel"/>
+        <Label x:Name="label" Content="RTLS Listener Information" HorizontalAlignment="Left" Margin="34,18,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="23"/>
+        <Button x:Name="connected_btn" Content="START" HorizontalAlignment="Left" Margin="574,96,0,0" VerticalAlignment="Top" Width="97" FontFamily="Artifakt Element Light" Background="#FF1457ED" BorderBrush="#FF1457ED" Style="{StaticResource RoundButtonTemplate}" Height="42" Click="connected_btn_Click"/>
+        <Button x:Name="stop_btn" Content="STOP" HorizontalAlignment="Left" Margin="686,96,0,0" VerticalAlignment="Top" Width="96" FontFamily="Artifakt Element Light" Background="#FF25262A" BorderBrush="#FF25262A" Style="{StaticResource RoundButtonTemplate}" Height="42" Click="stop_btn_Click"/>
+        <Label x:Name="label_Copy6" Content="SERIAL PORT : " HorizontalAlignment="Left" Margin="34,96,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
+        <ComboBox x:Name="cbx_serialPort" HorizontalAlignment="Left" Margin="185,101,0,0" VerticalAlignment="Top" Width="93" BorderBrush="White" Foreground="#FF1457ED" Background="#FF101213" FontWeight="Bold" FontSize="15" MouseWheel="cbx_serialPort_MouseWheel"/>
 
 
     </Grid>
