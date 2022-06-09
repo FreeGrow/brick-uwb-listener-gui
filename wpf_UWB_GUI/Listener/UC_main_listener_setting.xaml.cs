@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -33,6 +36,15 @@ namespace wpf_UWB_GUI
 
             timer10hz.Tick += new EventHandler(timer10hz_Tick);
             timer10hz.Start();
+
+
+            txt_pos_x.PreviewKeyDown += textbox_Position_KeyPress;
+            txt_pos_y.PreviewKeyDown += textbox_Position_KeyPress;
+            txt_pos_z.PreviewKeyDown += textbox_Position_KeyPress;
+
+            txt_pos_x.GotFocus += textbox_GotFocus;
+            txt_pos_y.GotFocus += textbox_GotFocus;
+            txt_pos_z.GotFocus += textbox_GotFocus;
         }
 
         private void UC_main_gateway_setting_Loaded(object sender, RoutedEventArgs e)
@@ -41,8 +53,11 @@ namespace wpf_UWB_GUI
 
         }
 
+        byte[] arSendByte;
+
         long prevMillis = 0;
         long prevSystemInfoMillis = 0;
+        long prevPositionMillis = 0;
 
         private void timer10hz_Tick(object sender, EventArgs e)
         {
@@ -87,6 +102,93 @@ namespace wpf_UWB_GUI
                 }
             }
 
+            if (fPositionClick)
+            {
+                if ((long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds - prevPositionMillis > 1500 * 1)
+                {
+                    prevPositionMillis = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
+
+                    if (positionStatus == 0)
+                    {
+                        positionStatus = 1;
+
+                        //aps 0 0 0
+                        int arCnt = 0;
+
+                        arSendByte = new byte[64];
+                        arSendByte[arCnt++] = (byte)'a';
+                        arSendByte[arCnt++] = (byte)'p';
+                        arSendByte[arCnt++] = (byte)'s';
+                        arSendByte[arCnt++] = (byte)' ';
+
+                        //sp_Anchor.Write(arByte, 0, 4);
+
+                        int iposX = (int)(double.Parse(txt_pos_x.Text.ToString()) * 1000);
+                        int iposY = (int)(double.Parse(txt_pos_y.Text.ToString()) * 1000);
+                        int iposZ = (int)(double.Parse(txt_pos_z.Text.ToString()) * 1000);
+
+                        String strPosX = iposX.ToString();
+                        String strPosY = iposY.ToString();
+                        String strPosZ = iposZ.ToString();
+
+                        for (int i = 0; i < strPosX.Length; i++)
+                        {
+                            arSendByte[arCnt++] = (byte)strPosX[i];
+                        }
+                        arSendByte[arCnt++] = (byte)' ';
+
+                        for (int i = 0; i < strPosY.Length; i++)
+                        {
+                            arSendByte[arCnt++] = (byte)strPosY[i];
+                        }
+                        arSendByte[arCnt++] = (byte)' ';
+
+                        for (int i = 0; i < strPosZ.Length; i++)
+                        {
+                            arSendByte[arCnt++] = (byte)strPosZ[i];
+                        }
+
+                        arSendByte[arCnt++] = 0x0d;
+
+                        for (int i = 0; i < arSendByte.Length; i++)
+                        {
+                            if (i % 5 == 0)
+                                Thread.Sleep(100);
+                            sendByte(arSendByte[i]);
+                        }
+                    }
+                    else if (positionStatus == 1)
+                    {
+                        fPositionClick = false;
+
+                        //nmi
+                        //nma
+
+                        if ((bool)chk_initiator.IsChecked)
+                        {
+                            Console.WriteLine("Set Checked True");
+                            Console.WriteLine("Send nmi");
+
+                            sendByte((byte)'n');
+                            sendByte((byte)'m');
+                            sendByte((byte)'i');
+                            sendByte(0x0d);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Set Checked False");
+                            Console.WriteLine("Send nma");
+
+                            sendByte((byte)'n');
+                            sendByte((byte)'m');
+                            sendByte((byte)'a');
+                            sendByte(0x0d);
+
+                        }
+                    }
+                }
+            }
+
 
             if (strList.Count < 1)
             {
@@ -97,15 +199,6 @@ namespace wpf_UWB_GUI
             strList.RemoveAt(0);
 
             Console.WriteLine("strTmp : " + strTmp);
-
-            //[000013.240 INF] sys: fw2 fw_ver = x01030001 cfg_ver = x00010700
-            //[000013.240 INF] uwb0: panid = xD438 addr = xDECAC54A6C402E4B
-            //[000013.250 INF] mode: an(act, -)
-            //[000013.260 INF] uwbmac: connected
-            //[000013.260 INF] uwbmac: bh disconnected
-            //[000013.260 INF] cfg: sync = 0 fwup = 0 ble = 1 leds = 0 init = 0 upd_rate_stat = 120 label = DW2E4B
-            //[000013.270 INF] enc: off
-            //[000013.280 INF] ble: addr = E9:D4: D1: E4: 71:39
 
             if (strTmp.Contains("panid="))
             {
@@ -134,16 +227,23 @@ namespace wpf_UWB_GUI
                 String init = strTmp.Substring(strTmp.IndexOf("init=") + 5, 1);
                 Console.WriteLine("init : " + init);
                 if (init.Contains("0"))
+                {
                     lbl_devInit.Content = "false";
+                    chk_initiator.IsChecked = false;
+                }
                 if (init.Contains("1"))
+                {
                     lbl_devInit.Content = "true";
+                    chk_initiator.IsChecked = true;
+                }
             }
+
             //apg: x: 0 y: 0 z: 0 qf: 0
             if (strTmp.Contains("apg:"))
             {
                 String pos = strTmp.Substring(strTmp.IndexOf("apg:") + 5);
                 Console.WriteLine("pos : " + pos);
-                lbl_devPosition.Content = pos;
+                //lbl_devPosition.Content = pos;
 
                 char[] split1 = { ' ' };
                 string[] result = pos.Split(split1);
@@ -152,11 +252,110 @@ namespace wpf_UWB_GUI
                 String pos_y = result[1].Substring(result[0].IndexOf("y:") + 3);
                 String pos_z = result[2].Substring(result[0].IndexOf("z:") + 3);
 
-                txt_pos_x.Text = pos_x;
-                txt_pos_y.Text = pos_y;
-                txt_pos_z.Text = pos_z;
+                float fpos_x = (float)int.Parse(pos_x) / 1000;
+                float fpos_y = (float)int.Parse(pos_y) / 1000;
+                float fpos_z = (float)int.Parse(pos_z) / 1000;
 
+                fpos_x = fpos_x * 100;
+                fpos_y = fpos_y * 100;
+                fpos_z = fpos_z * 100;
+
+                fpos_x = (float)Math.Truncate(fpos_x);
+                fpos_y = (float)Math.Truncate(fpos_y);
+                fpos_z = (float)Math.Truncate(fpos_z);
+
+                fpos_x = fpos_x / 100;
+                fpos_y = fpos_y / 100;
+                fpos_z = fpos_z / 100;
+
+                Console.WriteLine("fpos_x : " + fpos_x);
+                Console.WriteLine("fpos_y : " + fpos_y);
+                Console.WriteLine("fpos_z : " + fpos_z);
+
+                string spos_x = string.Format("{0:0.00}", fpos_x);
+                string spos_y = string.Format("{0:0.00}", fpos_y);
+                string spos_z = string.Format("{0:0.00}", fpos_z);
+
+                txt_pos_x.Text = spos_x.ToString();
+                txt_pos_y.Text = spos_y.ToString();
+                txt_pos_z.Text = spos_z.ToString();
+
+                lbl_devPosition.Content = "x:" + spos_x.ToString() 
+                                        + "y:" + spos_y.ToString() 
+                                        + "z:" + spos_z.ToString();
             }
+        }
+
+        public void sendByte(byte tmpByte)
+        {
+            byte[] arByte = new byte[2];
+            arByte[0] = tmpByte;
+            sp_Anchor.Write(arByte, 0, 1);
+        }
+
+        public byte[] AddByteToArray(byte[] bArray, byte newByte)
+        {
+            byte[] newArray = new byte[bArray.Length + 1];
+            bArray.CopyTo(newArray, 1);
+            newArray[0] = newByte;
+            return newArray;
+        }
+
+
+        // String을 바이트 배열로 변환 
+        private byte[] StringToByte(string str)
+        {
+            byte[] StrByte = Encoding.UTF8.GetBytes(str);
+            return StrByte;
+        }
+
+        private void textbox_Position_KeyPress(object sender, KeyEventArgs e)
+        {
+            TextBox tmpTextBox = (TextBox)sender;
+            if (!(((Key.D0 <= e.Key) && (e.Key <= Key.D9))
+                 || ((Key.NumPad0 <= e.Key) && (e.Key <= Key.NumPad9))
+                 || e.Key == Key.Decimal
+                 || e.Key == Key.OemPeriod
+                 || e.Key == Key.Tab
+                 || e.Key == Key.Left
+                 || e.Key == Key.Right
+                 || e.Key == Key.Up
+                 || e.Key == Key.Down
+                 || e.Key == Key.Back))
+            {
+                e.Handled = true;
+            }
+            if (e.Key == Key.Decimal || e.Key == Key.OemPeriod)
+            {
+                if (tmpTextBox.Text.ToString().Contains("."))
+                {
+                    e.Handled = true;
+                }
+            }
+
+            //string strTmp = tmpTextBox.Text;
+
+            //if (strTmp.IndexOf(".") != -1)
+            //{
+            //    if (strTmp.Length > strTmp.IndexOf(".") + 2)
+            //    {
+            //        if (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Tab)
+            //        {
+            //            ;
+            //        }
+            //        else
+            //        {
+            //            e.Handled = true;
+            //        }
+            //    }
+            //}
+
+        }
+
+        private void textbox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tmpTextBox = (TextBox)sender;
+            tmpTextBox.Select(tmpTextBox.Text.Length, 0);
         }
 
         private void connected_btn_Click(object sender, RoutedEventArgs e)
@@ -182,6 +381,13 @@ namespace wpf_UWB_GUI
             serialPort_Status(true);
         }
 
+        private void stop_btn_Click(object sender, RoutedEventArgs e)
+        {
+            sp_Anchor.Close();
+
+            serialPort_Status(false);
+        }
+
         public void sp_listener_DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             //String receiveData = sp_listener.ReadExisting();
@@ -194,16 +400,6 @@ namespace wpf_UWB_GUI
             {
 
             }
-
-            //Console.Write("sp_listener_DataReceivedHandler()");
-            //Console.WriteLine(receiveData);
-        }
-
-        private void stop_btn_Click(object sender, RoutedEventArgs e)
-        {
-            sp_Anchor.Close();
-
-            serialPort_Status(false);
         }
 
         private void cbx_serialPort_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
@@ -230,6 +426,7 @@ namespace wpf_UWB_GUI
         {
             if (fState)
             {
+                cbx_serialPort.IsEnabled = false;
                 connected_btn.IsEnabled = false;
                 stop_btn.Background = new SolidColorBrush(config.titleSelectColor);
                 connected_btn.Background = new SolidColorBrush(config.titleUnSelectColor);
@@ -239,6 +436,7 @@ namespace wpf_UWB_GUI
             }
             else
             {
+                cbx_serialPort.IsEnabled = true;
                 connected_btn.IsEnabled = true;
                 connected_btn.Background = new SolidColorBrush(config.titleSelectColor);
                 stop_btn.Background = new SolidColorBrush(config.titleUnSelectColor);
@@ -248,18 +446,28 @@ namespace wpf_UWB_GUI
             }
         }
 
+        //Get SystemInfo
         int settingStatus = 0;
         bool fSettingClick = false;
 
+        //Set Position Setting
+        int positionStatus = 0;
+        bool fPositionClick = false;
+
         private void btn_getSetting_Click(object sender, RoutedEventArgs e)
         {
+            if (!sp_Anchor.IsOpen) return;
+
             settingStatus = 0;
             fSettingClick = true;
         }
 
         private void btn_setSetting_Click(object sender, RoutedEventArgs e)
         {
+            if (!sp_Anchor.IsOpen) return;
 
+            positionStatus = 0;
+            fPositionClick = true;
         }
     }
 }

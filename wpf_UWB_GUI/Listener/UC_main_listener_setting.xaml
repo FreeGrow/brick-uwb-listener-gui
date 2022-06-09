@@ -29,12 +29,10 @@
         <Label x:Name="label_connect_status" Content="Connected" HorizontalAlignment="Left" Margin="698,24,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="#FF53FF53" FontSize="20"/>
         <Image x:Name="img_connect_status" HorizontalAlignment="Left" Height="17" Margin="674,32,0,0" VerticalAlignment="Top" Width="15" Source="/wpf_UWB_GUI;component/Resources/img_connected.png" Stretch="Fill"/>
 
-        <Border x:Name="mMapViewLayout1"  HorizontalAlignment="Left" VerticalAlignment="Top"  Background="#FF282828" BorderBrush="#FF101213" BorderThickness="1" Height="301" Margin="444,207,0,0" CornerRadius="10,10,10,10" Width="369">
+        <Border x:Name="mMapViewLayout1"  HorizontalAlignment="Left" VerticalAlignment="Top"  Background="#FF282828" BorderBrush="#FF101213" BorderThickness="1" Height="243" Margin="444,265,0,0" CornerRadius="10,10,10,10" Width="369">
         </Border>
-        <Label x:Name="lbl4_Copy" Content="INITIATOR : " HorizontalAlignment="Left" Margin="466,225,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
-        <Label x:Name="lbl5_Copy" Content="POSITION  X : " HorizontalAlignment="Left" Margin="466,278,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
-        <Label x:Name="lbl_devInit_Copy" Content="" HorizontalAlignment="Left" Margin="618,225,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
-        <Label x:Name="lbl_devPosition_Copy" Content="" HorizontalAlignment="Left" Margin="618,278,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
+        <Label x:Name="lbl4_Copy" Content="INITIATOR : " HorizontalAlignment="Left" Margin="466,445,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
+        <Label x:Name="lbl5_Copy" Content="POSITION  X : " HorizontalAlignment="Left" Margin="466,289,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
         <Border x:Name="mMapViewLayout1_Copy"  HorizontalAlignment="Left" VerticalAlignment="Top"  Background="#FF282828" BorderBrush="#FF101213" BorderThickness="1" Height="301" Margin="34,265,0,0" CornerRadius="10,10,10,10" Width="389"/>
         <Label x:Name="lbl1" Content="Device Name :" HorizontalAlignment="Left" Margin="53,283,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
         <Label x:Name="lbl2" Content="PAN ID :" HorizontalAlignment="Left" Margin="53,336,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
@@ -48,15 +46,44 @@
         <Label x:Name="lbl_devPosition" Content="" HorizontalAlignment="Left" Margin="204,492,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
         <Button x:Name="btn_setSetting" Content="설정" HorizontalAlignment="Left" Margin="677,524,0,0" VerticalAlignment="Top" Width="136" Background="#FF1457ED" BorderBrush="#FF1457ED" FontFamily="Artifakt Element Light" Click="btn_setSetting_Click" Height="42"/>
 
-        <TextBox x:Name="txt_pos_x" HorizontalAlignment="Left" Margin="631,281,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="10.00" VerticalAlignment="Top" Height="33" Width="116" Background="White" FontSize="20" FontFamily="Artifakt Element Light" Foreground="#DD000000" />
-        <Label x:Name="lbl5_Copy1" Content="Y :" HorizontalAlignment="Left" Margin="571,332,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
-        <TextBox x:Name="txt_pos_y" HorizontalAlignment="Left" Margin="631,335,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="10.00" VerticalAlignment="Top" Height="33" Width="116" Background="White" FontSize="20" FontFamily="Artifakt Element Light"/>
-        <Label x:Name="lbl5_Copy2" Content="Z :" HorizontalAlignment="Left" Margin="571,385,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
-        <TextBox x:Name="txt_pos_z" HorizontalAlignment="Left" Margin="631,388,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="10.00" VerticalAlignment="Top" Height="33" Width="116" Background="White" FontSize="20" FontFamily="Artifakt Element Light"/>
-        <Label x:Name="lbl5_Copy3" Content="(m)" HorizontalAlignment="Left" Margin="752,281,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
-        <Label x:Name="lbl5_Copy4" Content="(m)" HorizontalAlignment="Left" Margin="752,335,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
-        <Label x:Name="lbl5_Copy5" Content="(m)" HorizontalAlignment="Left" Margin="752,388,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
 
+        <TextBox x:Name="txt_pos_x" HorizontalAlignment="Left" Margin="631,292,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="10.00" VerticalAlignment="Top" Height="33" Width="116" Background="White" FontSize="20" FontFamily="Artifakt Element Light" TabIndex="11" VerticalContentAlignment="Center" TextAlignment="Center">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type materialDesign:SmartHint}">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Label x:Name="lbl5_Copy1" Content="Y :" HorizontalAlignment="Left" Margin="571,336,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
+        <TextBox x:Name="txt_pos_y" HorizontalAlignment="Left" Margin="631,340,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="10.00" VerticalAlignment="Top" Height="32" Width="116" Background="White" FontSize="20" FontFamily="Artifakt Element Light"  TabIndex="12" VerticalContentAlignment="Center" TextAlignment="Center">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type materialDesign:SmartHint}">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Label x:Name="lbl5_Copy2" Content="Z :" HorizontalAlignment="Left" Margin="571,386,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
+        <TextBox x:Name="txt_pos_z" HorizontalAlignment="Left" Margin="631,388,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="10.00" VerticalAlignment="Top" Height="34" Width="116" Background="White" FontSize="20" FontFamily="Artifakt Element Light"  TabIndex="13" VerticalContentAlignment="Center" TextAlignment="Center">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type materialDesign:SmartHint}">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Label x:Name="lbl5_Copy3" Content="(m)" HorizontalAlignment="Left" Margin="752,292,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
+        <Label x:Name="lbl5_Copy4" Content="(m)" HorizontalAlignment="Left" Margin="752,340,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
+        <Label x:Name="lbl5_Copy5" Content="(m)" HorizontalAlignment="Left" Margin="752,388,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Artifakt Element Light"/>
+        <CheckBox x:Name="chk_initiator" Content="" HorizontalAlignment="Left" Margin="629,448,0,0" VerticalAlignment="Top" BorderBrush="#FF008EFF" Foreground="#DDFFFFFF" FontSize="13" IsChecked="False">
+            <CheckBox.Resources>
+                <!--Unchecked state-->
+                <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="#FF707070"/>
+                <!--Checked state-->
+                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#FF53FF53"/>
+            </CheckBox.Resources>
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="1.8" ScaleY="1.8" />
+            </CheckBox.LayoutTransform>
+        </CheckBox>
 
     </Grid>
 </Page>

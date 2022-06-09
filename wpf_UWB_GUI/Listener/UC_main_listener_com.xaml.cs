@@ -93,6 +93,7 @@ namespace wpf_UWB_GUI
             {
                 if (listenerConnect != null)
                     listenerConnect(true);
+                cbx_serialPort.IsEnabled = false;
                 connected_btn.IsEnabled = false;
                 stop_btn.Background = new SolidColorBrush(config.titleSelectColor);
                 connected_btn.Background = new SolidColorBrush(config.titleUnSelectColor);
@@ -104,6 +105,7 @@ namespace wpf_UWB_GUI
             {
                 if (listenerConnect != null)
                     listenerConnect(false);
+                cbx_serialPort.IsEnabled = true;
                 connected_btn.IsEnabled = true;
                 connected_btn.Background = new SolidColorBrush(config.titleSelectColor);
                 stop_btn.Background = new SolidColorBrush(config.titleUnSelectColor);
