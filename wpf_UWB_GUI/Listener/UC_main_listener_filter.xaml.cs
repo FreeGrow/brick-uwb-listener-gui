@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -33,12 +32,30 @@ namespace wpf_UWB_GUI
         String strSaveAveValue = "";
         String strSaveLpfValue = "";
         String strSavePath = "";
+        
+        List<Control> listCursorControl = new List<Control>();
 
         public UC_main_listener_filter()
         {
             Console.WriteLine("UC_main_listener_filter()");
 
             InitializeComponent();
+
+            listCursorControl.Add(chk_none);
+            listCursorControl.Add(label_none);
+            listCursorControl.Add(chk_movingAverage);
+            listCursorControl.Add(label_ave);
+            listCursorControl.Add(chk_lpf);
+            listCursorControl.Add(label_lpf);
+            listCursorControl.Add(btn_start);
+            listCursorControl.Add(btn_stop);
+            listCursorControl.Add(btn_filepath);
+
+            for(int i=0;i< listCursorControl.Count; i++)
+            {
+                listCursorControl[i].MouseEnter += new MouseEventHandler(mouseEnterHandler);
+                listCursorControl[i].MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+            }
 
             String str_filterValue = Properties.Settings.Default.filter_value;
 
@@ -91,6 +108,16 @@ namespace wpf_UWB_GUI
             timer10hz.Interval = TimeSpan.FromMilliseconds(100);
             timer10hz.Tick += new EventHandler(timer10hz_Tick);
             timer10hz.Start();
+        }
+
+        private void mouseEnterHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Hand;
+        }
+
+        private void mouseLeaveHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         int prevMaxCount = 0;
@@ -311,7 +338,7 @@ namespace wpf_UWB_GUI
         private void btn_filePath_Click(object sender, RoutedEventArgs e)
         {
             String file_path = null;
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {

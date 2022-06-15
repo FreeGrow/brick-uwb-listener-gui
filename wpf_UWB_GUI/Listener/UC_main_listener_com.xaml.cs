@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -37,12 +38,24 @@ namespace wpf_UWB_GUI
 
         long prevMillis = 0;
 
+        List<Control> listCursorControl = new List<Control>();
+
 
         public UC_main_listener_com()
         {
             Console.WriteLine("UC_main_listener_com()");
 
             InitializeComponent();
+
+            listCursorControl.Add(cbx_serialPort);
+            listCursorControl.Add(connected_btn);
+            listCursorControl.Add(stop_btn);
+
+            for(int i=0;i< listCursorControl.Count; i++)
+            {
+                listCursorControl[i].MouseEnter += new MouseEventHandler(mouseEnterHandler);
+                listCursorControl[i].MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+            }
 
             var portnames = SerialPort.GetPortNames();
             for (int i = 0; i < portnames.Length; i++) cbx_serialPort.Items.Add(portnames[i]);
@@ -53,6 +66,16 @@ namespace wpf_UWB_GUI
             timer10hz.Start();
 
             sp_mqttConnect = new listener_mqttConnect();
+        }
+
+        private void mouseEnterHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Hand;
+        }
+
+        private void mouseLeaveHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         private void UC_main_gateway_com_Loaded(object sender, RoutedEventArgs e)

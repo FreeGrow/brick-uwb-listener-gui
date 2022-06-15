@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,10 +14,33 @@ namespace wpf_UWB_GUI.Listener
         public delegate void OnDevAddHandler(class_listener_list cl_Addlistener);
         public event OnDevAddHandler devAddHandler;
 
+        List<Control> listCursorControl = new List<Control>();
+        List<Control> listFiledCursorControl = new List<Control>();
+
 
         public DeviceAddWindow()
         {
             InitializeComponent();
+
+            listFiledCursorControl.Add(textBox_devSN);
+            listFiledCursorControl.Add(textBox_devName);
+            listFiledCursorControl.Add(textBox_positionX);
+            listFiledCursorControl.Add(textBox_positionY);
+            listFiledCursorControl.Add(textBox_positionZ);
+            listCursorControl.Add(btn_save);
+            listCursorControl.Add(btn_close);
+
+            for (int i = 0; i < listFiledCursorControl.Count; i++)
+            {
+                listFiledCursorControl[i].MouseEnter += new MouseEventHandler(mouseFieldEnterHandler);
+                listFiledCursorControl[i].MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+            }
+
+            for (int i = 0; i < listCursorControl.Count; i++)
+            {
+                listCursorControl[i].MouseEnter += new MouseEventHandler(mouseEnterHandler);
+                listCursorControl[i].MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+            }
 
             textBox_devSN.Focus();
 
@@ -35,6 +59,21 @@ namespace wpf_UWB_GUI.Listener
             textBox_positionX.GotFocus += textbox_GotFocus;
             textBox_positionY.GotFocus += textbox_GotFocus;
             textBox_positionZ.GotFocus += textbox_GotFocus;
+        }
+
+        private void mouseEnterHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Hand;
+        }
+
+        private void mouseFieldEnterHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.IBeam;
+        }
+
+        private void mouseLeaveHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         private void textbox_GotFocus(object sender, RoutedEventArgs e)

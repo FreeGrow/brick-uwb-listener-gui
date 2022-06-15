@@ -25,11 +25,29 @@ namespace wpf_UWB_GUI
 
         List<String> strList = new List<string>();
 
+        List<Control> listCursorControl = new List<Control>();
+
         public UC_main_listener_setting()
         {
             Console.WriteLine("UC_main_listener_setting()");
 
             InitializeComponent();
+
+            listCursorControl.Add(cbx_serialPort);
+            listCursorControl.Add(connected_btn);
+            listCursorControl.Add(stop_btn);
+            listCursorControl.Add(btn_getSetting);
+            listCursorControl.Add(btn_setSetting);
+            listCursorControl.Add(txt_pos_x);
+            listCursorControl.Add(txt_pos_y);
+            listCursorControl.Add(txt_pos_z);
+            listCursorControl.Add(chk_initiator);
+
+            for (int i = 0; i < listCursorControl.Count; i++)
+            {
+                listCursorControl[i].MouseEnter += new MouseEventHandler(mouseEnterHandler);
+                listCursorControl[i].MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+            }
 
             var portnames = SerialPort.GetPortNames();
             for (int i = 0; i < portnames.Length; i++) cbx_serialPort.Items.Add(portnames[i]);
@@ -50,7 +68,16 @@ namespace wpf_UWB_GUI
         private void UC_main_gateway_setting_Loaded(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("UC_main_gateway_com_Loaded()");
+        }
 
+        private void mouseEnterHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Hand;
+        }
+
+        private void mouseLeaveHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         byte[] arSendByte;

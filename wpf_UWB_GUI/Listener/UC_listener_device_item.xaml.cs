@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using wpf_UWB_GUI.Listener;
 
@@ -21,10 +23,32 @@ namespace wpf_UWB_GUI
 
         class_listener_list clList = new class_listener_list();
 
+        List<Control> listCursorControl = new List<Control>();
+
         public UC_listener_device_item()
         {
             InitializeComponent();
 
+            listCursorControl.Add(color_devColor);
+            listCursorControl.Add(btn_edit);
+            listCursorControl.Add(btn_remove);
+
+            for (int i = 0; i < listCursorControl.Count; i++)
+            {
+                listCursorControl[i].MouseEnter += new MouseEventHandler(mouseEnterHandler);
+                listCursorControl[i].MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+            }
+
+        }
+
+        private void mouseEnterHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Hand;
+        }
+
+        private void mouseLeaveHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         public void set_clList(class_listener_list mClList)

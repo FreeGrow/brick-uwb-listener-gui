@@ -11,11 +11,11 @@
         <Label x:Name="lbl_devSerialNum" Content="DW0679" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="55,12,0,0" FontSize="14" FontWeight="Bold" Width="68" Foreground="#DDFFFFFF"/>
         <Label x:Name="lbl_devType" Content="Anchor" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="126,12,0,0" FontSize="14" FontWeight="Bold" Width="59" Foreground="#DDFFFFFF"/>
         <Label x:Name="lbl_devName" Content="버킷" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="188,13,0,0" FontSize="14" FontWeight="Bold" Width="92" Foreground="#DDFFFFFF"/>
-        <Label x:Name="lbl_devPosition" Content=".3.1m, 1.1m, 1.1m" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="285,12,0,0" FontSize="14" FontWeight="Bold" Width="173" Foreground="#DDFFFFFF"/>
+        <Label x:Name="lbl_devPosition" Content="3.1m, 1.1m, 1.1m" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="285,12,0,0" FontSize="14" FontWeight="Bold" Width="173" Foreground="#DDFFFFFF"/>
         <Label x:Name="lbl_devFilterPosition" Content="3.1m, 1.1m, 1.1m" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="463,12,0,0" FontSize="14" FontWeight="Bold" Width="173" Foreground="#DDFFFFFF"/>
         <xctk:ColorPicker x:Name="color_devColor" HorizontalAlignment="Left" Margin="8,14,0,0" VerticalAlignment="Top" SelectedColorChanged="colorPicker_SelectedColorChanged" Width="40"/>
         <Image x:Name="img_devStatus" HorizontalAlignment="Left" Height="20" Margin="655,16,0,0" VerticalAlignment="Top" Width="20" Source="Resources/status_off.png"/>
-        <Button x:Name="btn_edit" Content="Edit" HorizontalAlignment="Left" Margin="680,10,0,0" VerticalAlignment="Top" Width="36" Padding="0,4" Click="btn_edit_Click"/>
-        <Button x:Name="btn_remove" Content="Remove" HorizontalAlignment="Left" Margin="737,10,0,0" VerticalAlignment="Top" Width="60" Padding="0,4" Click="btn_remove_Click"/>
+        <Button x:Name="btn_edit" Content="Edit" HorizontalAlignment="Left" Margin="680,10,0,0" VerticalAlignment="Top" Width="36" Padding="0,4" Click="btn_edit_Click" Background="#FF2196F3" BorderBrush="{x:Null}"/>
+        <Button x:Name="btn_remove" Content="Remove" HorizontalAlignment="Left" Margin="737,10,0,0" VerticalAlignment="Top" Width="60" Padding="0,4" Click="btn_remove_Click" Background="#FFF32121" BorderBrush="{x:Null}"/>
     </Grid>
 </UserControl>

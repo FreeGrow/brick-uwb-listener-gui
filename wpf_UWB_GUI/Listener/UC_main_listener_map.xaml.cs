@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -34,6 +34,8 @@ namespace wpf_UWB_GUI
         String strSaveLpfValue = "";
         String strSavePath = "";
 
+        List<Control> listCursorControl = new List<Control>();
+
         public UC_main_listener_map()
         {
             Console.WriteLine("UC_main_listener_map()");
@@ -54,6 +56,29 @@ namespace wpf_UWB_GUI
                 txtfield_height.Text = result[1];
             }
 
+            listCursorControl.Add(btn_filepath);
+            listCursorControl.Add(chk_device);
+            listCursorControl.Add(chk_filter);
+            listCursorControl.Add(chk_name);
+            listCursorControl.Add(chk_position);
+            listCursorControl.Add(btn_zoom_fit);
+            listCursorControl.Add(btn_zoom_plus);
+            listCursorControl.Add(btn_zoom_minus);
+
+            for (int i = 0; i < listCursorControl.Count; i++)
+            {
+                listCursorControl[i].MouseEnter += new MouseEventHandler(mouseEnterHandler);
+                listCursorControl[i].MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+            }
+
+            btn_sync.MouseEnter += new MouseEventHandler(mouseEnterHandler);
+            btn_sync.MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+
+            txtfield_width.MouseEnter += new MouseEventHandler(mouseFieldEnterHandler);
+            txtfield_width.MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+
+            txtfield_height.MouseEnter += new MouseEventHandler(mouseFieldEnterHandler);
+            txtfield_height.MouseLeave += new MouseEventHandler(mouseLeaveHandler);
 
             ucMapControl = new UC_listener_map_conrol();
             ucMapControl.UC_MapUpdate();
@@ -64,6 +89,21 @@ namespace wpf_UWB_GUI
             timer10hz.Interval = TimeSpan.FromMilliseconds(100);
             timer10hz.Tick += new EventHandler(timer10hz_Tick);
             timer10hz.Start();
+        }
+
+        private void mouseEnterHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Hand;
+        }
+
+        private void mouseLeaveHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Arrow;
+        }
+
+        private void mouseFieldEnterHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.IBeam;
         }
 
         //CheckBox Status
@@ -130,7 +170,7 @@ namespace wpf_UWB_GUI
 
         private void btn_filePath_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
+            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
 
             string OpenFilePath = System.Environment.CurrentDirectory;
 
@@ -141,7 +181,7 @@ namespace wpf_UWB_GUI
             ofd.Filter = "그림 파일 (*.jpg, *.gif, *.bmp) | *.jpg; *.gif; *.bmp;";
 
             //파일 오픈창 로드
-            DialogResult dr = ofd.ShowDialog();
+            System.Windows.Forms.DialogResult dr = ofd.ShowDialog();
 
             //OK버튼 클릭시
             if (dr == System.Windows.Forms.DialogResult.OK)

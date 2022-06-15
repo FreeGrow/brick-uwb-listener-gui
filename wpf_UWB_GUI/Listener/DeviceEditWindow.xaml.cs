@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,13 +18,50 @@ namespace wpf_UWB_GUI.Listener
 
         class_listener_list clList;
 
+        List<Control> listCursorControl = new List<Control>();
+        List<Control> listFieldCursorControl = new List<Control>();
+
         public DeviceEditWindow()
         {
             InitializeComponent();
 
+            listFieldCursorControl.Add(textBox_devName);
+            listFieldCursorControl.Add(textBox_positionX);
+            listFieldCursorControl.Add(textBox_positionY);
+            listFieldCursorControl.Add(textBox_positionZ);
+            listCursorControl.Add(btn_save);
+            listCursorControl.Add(btn_close);
+
+            for (int i = 0; i < listFieldCursorControl.Count; i++)
+            {
+                listFieldCursorControl[i].MouseEnter += new MouseEventHandler(mouseFieldEnterHandler);
+                listFieldCursorControl[i].MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+            }
+
+            for (int i = 0; i < listCursorControl.Count; i++)
+            {
+                listCursorControl[i].MouseEnter += new MouseEventHandler(mouseEnterHandler);
+                listCursorControl[i].MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+            }
+
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             textBox_devName.Focus();
+        }
+
+        private void mouseEnterHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Hand;
+        }
+
+        private void mouseFieldEnterHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.IBeam;
+        }
+
+        private void mouseLeaveHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         private void DeviceEditWindow_Loaded(object sender, RoutedEventArgs e)

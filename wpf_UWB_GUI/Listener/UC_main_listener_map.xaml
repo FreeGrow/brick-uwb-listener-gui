@@ -39,7 +39,7 @@
         <Button x:Name="btn_filepath" Content="맵 파일 위치" HorizontalAlignment="Left" Margin="34,20,0,0" VerticalAlignment="Top" Width="92" FontFamily="Artifakt Element Light" Background="#FF1457ED" BorderBrush="#FF1457ED" Style="{StaticResource RoundButtonTemplate}" Height="36" Click="btn_filePath_Click"/>
         <TextBox x:Name="textBox_filepath" HorizontalAlignment="Left" Height="23" Margin="139,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="393" Foreground="#FF6B6C6D" SelectionBrush="#FF008DFF" BorderBrush="#FF6B6C6D" IsReadOnly="True"/>
         <Label x:Name="label_none_Copy" Content="Width(m) :" HorizontalAlignment="Left" Margin="111,82,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="12" FontFamily="Artifakt Element Light"/>
-        <Border BorderThickness="1" BorderBrush="#FF707070" CornerRadius="8" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="183,80,586,517" Width="69" Height="27">
+        <Border x:Name="border_width" BorderThickness="1" BorderBrush="#FF707070" CornerRadius="8" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="183,80,586,517" Width="69" Height="27">
             <TextBox x:Name="txtfield_width" materialDesign:HintAssist.Hint="0" BorderThickness="0" BorderBrush="#89FFFFFF" Foreground="#DDFFFFFF" HorizontalAlignment="Center" CaretBrush="White"/>
         </Border>
         <Label Content="Height(m) :" HorizontalAlignment="Left" Margin="257,82,0,0" VerticalAlignment="Top" Background="#FF101213" Foreground="White" FontSize="12" FontFamily="Artifakt Element Light"/>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -33,11 +34,25 @@ namespace wpf_UWB_GUI
 
         List<UC_listener_device_item> uc_deviceList = new List<UC_listener_device_item>();
 
+        List<Control> listCursorControl = new List<Control>();
+
         public UC_main_listener_device()
         {
             Console.WriteLine("UC_main_listener_device()");
 
             InitializeComponent();
+
+            listCursorControl.Add(btn_autoAdd);
+            listCursorControl.Add(btn_add);
+
+            btn_sync.MouseEnter += new MouseEventHandler(mouseEnterHandler);
+            btn_sync.MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+
+            for (int i = 0; i < listCursorControl.Count; i++)
+            {
+                listCursorControl[i].MouseEnter += new MouseEventHandler(mouseEnterHandler);
+                listCursorControl[i].MouseLeave += new MouseEventHandler(mouseLeaveHandler);
+            }
 
             DeviceUpdate();
 
@@ -45,6 +60,16 @@ namespace wpf_UWB_GUI
             timer10hz.Tick += new EventHandler(timer10hz_Tick);
             timer10hz.Start();
 
+        }
+
+        private void mouseEnterHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Hand;
+        }
+
+        private void mouseLeaveHandler(object sender, MouseEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         private void UC_main_listener_device_Loaded(object sender, RoutedEventArgs e)

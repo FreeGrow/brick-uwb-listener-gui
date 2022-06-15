@@ -278,11 +278,11 @@ namespace wpf_UWB_GUI
             }
         }
 
-        private void btn_gateway_click(object sender, RoutedEventArgs e)
-        {
-            nowTitleState = StateTitleGateway;
-            btn_Title_menu_click(nowTitleState);
-        }
+        //private void btn_gateway_click(object sender, RoutedEventArgs e)
+        //{
+        //    nowTitleState = StateTitleGateway;
+        //    btn_Title_menu_click(nowTitleState);
+        //}
 
         private void btn_listener_click(object sender, RoutedEventArgs e)
         {
@@ -294,13 +294,13 @@ namespace wpf_UWB_GUI
         {
             tabBarLayout.Children.Clear();
 
-            if (state == StateTitleListener)
-            {
-                //btn_mode_gateway.Background = new SolidColorBrush(titleUnSelectColor);
-                btn_mode_listener.Background = new SolidColorBrush(titleSelectColor);
+            //if (state == StateTitleListener)
+            //{
+            //    //btn_mode_gateway.Background = new SolidColorBrush(titleUnSelectColor);
+            //    btn_mode_listener.Background = new SolidColorBrush(titleSelectColor);
 
-                tabBarLayout.Children.Add(ucMenuListener);
-            }
+            //    tabBarLayout.Children.Add(ucMenuListener);
+            //}
         }
 
         public void setGatewayMenuButton(int btnNumber)
