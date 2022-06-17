@@ -182,10 +182,6 @@ namespace wpf_UWB_GUI
         }
 
 
-        /*
-         * 
-         */
-
         private void setListenerParse(List<class_listener_list> mlistListenerParse)
         {
             if (listListenerParse.Count == 0)
