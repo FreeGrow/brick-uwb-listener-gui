@@ -146,10 +146,19 @@ namespace wpf_UWB_GUI
 
             sp_mqttConnect.init();
             sp_mqttConnect.setSerialPort(cbx_serialPort.SelectedItem.ToString(), 115200);
-            sp_mqttConnect.sp_Connect();
-            setSerialHandler(sp_mqttConnect);
 
-            serialPort_Status(true);
+
+            try
+            {
+                sp_mqttConnect.sp_Connect();
+                setSerialHandler(sp_mqttConnect);
+                serialPort_Status(true);
+            }
+            catch (Exception e1)
+            {
+                MessageBox.Show("Port is opened. Not Connect.");
+                return;
+            }
         }
 
         private void stop_btn_Click(object sender, RoutedEventArgs e)

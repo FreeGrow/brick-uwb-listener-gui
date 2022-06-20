@@ -52,8 +52,16 @@ namespace wpf_UWB_GUI
 
             if (result.Length == 2)
             {
-                txtfield_width.Text = result[0];
-                txtfield_height.Text = result[1];
+                if (result[0].Length == 0) txtfield_width.Text = "10";
+                else txtfield_width.Text = result[0];
+
+                if (result[1].Length == 0) txtfield_height.Text = "10";
+                else txtfield_height.Text = result[1];
+            }
+            else
+            {
+                txtfield_width.Text = "10";
+                txtfield_height.Text = "10";
             }
 
             listCursorControl.Add(btn_filepath);
@@ -70,9 +78,6 @@ namespace wpf_UWB_GUI
                 listCursorControl[i].MouseEnter += new MouseEventHandler(mouseEnterHandler);
                 listCursorControl[i].MouseLeave += new MouseEventHandler(mouseLeaveHandler);
             }
-
-            btn_sync.MouseEnter += new MouseEventHandler(mouseEnterHandler);
-            btn_sync.MouseLeave += new MouseEventHandler(mouseLeaveHandler);
 
             txtfield_width.MouseEnter += new MouseEventHandler(mouseFieldEnterHandler);
             txtfield_width.MouseLeave += new MouseEventHandler(mouseLeaveHandler);
@@ -236,7 +241,7 @@ namespace wpf_UWB_GUI
 
         private void label_device_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (e.RightButton == System.Windows.Input.MouseButtonState.Pressed)     return;
+            if (e.RightButton == System.Windows.Input.MouseButtonState.Pressed) return;
             chk_device.IsChecked = !chk_device.IsChecked;
         }
 

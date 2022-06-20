@@ -49,22 +49,22 @@ namespace wpf_UWB_GUI.Listener
         private void timer10hz_Tick(object sender, EventArgs e)
         {
             //return;
-            //if (!fGetPos)
-            //{
-            //    if (strReceiveData.Length != prevStrReceiveData.Length)
-            //    {
-            //        prevSystemInfoMillis = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
-            //    }
+            if (!fGetPos)
+            {
+                if (strReceiveData.Length != prevStrReceiveData.Length)
+                {
+                    prevSystemInfoMillis = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
+                }
 
-            //    if ((long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds - prevSystemInfoMillis > 1000 * 5)
-            //    {
-            //        prevSystemInfoMillis = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
-            //        Console.WriteLine("send Lec Check : ");
-            //        lecSend();
-            //    }
+                if ((long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds - prevSystemInfoMillis > 1000 * 5)
+                {
+                    prevSystemInfoMillis = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
+                    Console.WriteLine("send Lec Check : ");
+                    lecSend();
+                }
 
-            //    prevStrReceiveData = strReceiveData;
-            //}
+                prevStrReceiveData = strReceiveData;
+            }
 
 
             //if (strReceiveData.Length == 0) return;

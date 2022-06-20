@@ -357,8 +357,11 @@ namespace wpf_UWB_GUI
 
         private void btn_autoAdd_Click(object sender, RoutedEventArgs e)
         {
-            clickAutoAnchor();
-            fAutoAnchor = true;
+            if (getMainConnectHandler())
+            {
+                clickAutoAnchor();
+                fAutoAnchor = true;
+            }
         }
     }
 }

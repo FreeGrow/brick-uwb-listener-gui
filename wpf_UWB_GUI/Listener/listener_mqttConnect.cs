@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
-using System.Threading;
 using System.Windows;
 
 namespace wpf_UWB_GUI.Listener
@@ -73,6 +72,8 @@ namespace wpf_UWB_GUI.Listener
 
         public void sp_AnchorList()
         {
+            if (!sp_listener.IsOpen) return;
+            Console.WriteLine("sp_AnchorList()");
             byte[] arByte = new byte[10];
             arByte[0] = (byte)'l';
             arByte[1] = (byte)'a';
@@ -82,6 +83,7 @@ namespace wpf_UWB_GUI.Listener
 
         public void sp_lecSend()
         {
+            if (!sp_listener.IsOpen) return;
             Console.WriteLine("sp_lecSend()");
             byte[] arByte = new byte[10];
             arByte[0] = (byte)'l';
@@ -93,6 +95,7 @@ namespace wpf_UWB_GUI.Listener
 
         public void sp_systemInfo()
         {
+            if (!sp_listener.IsOpen) return;
             Console.WriteLine("sp_systemInfo()");
             byte[] arByte = new byte[10];
             arByte[0] = (byte)'s';
@@ -103,6 +106,8 @@ namespace wpf_UWB_GUI.Listener
 
         public void sp_EnterTwice()
         {
+            if (!sp_listener.IsOpen) return;
+            Console.WriteLine("sp_EnterTwice()");
             byte[] arByte = new byte[10];
             arByte[0] = 0x0d;
             sp_listener.Write(arByte, 0, 1);

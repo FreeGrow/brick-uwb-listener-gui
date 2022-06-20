@@ -113,7 +113,8 @@ namespace wpf_UWB_GUI
                         arByte[0] = (byte)'s';
                         arByte[1] = (byte)'i';
                         arByte[2] = 0x0d;
-                        sp_Anchor.Write(arByte, 0, 3);
+                        if (sp_Anchor.IsOpen)
+                            sp_Anchor.Write(arByte, 0, 3);
                     }
                     else if (settingStatus == 1)
                     {
@@ -124,7 +125,8 @@ namespace wpf_UWB_GUI
                         arByte[1] = (byte)'p';
                         arByte[2] = (byte)'g';
                         arByte[3] = 0x0d;
-                        sp_Anchor.Write(arByte, 0, 4);
+                        if (sp_Anchor.IsOpen)
+                            sp_Anchor.Write(arByte, 0, 4);
                     }
                 }
             }
@@ -186,7 +188,7 @@ namespace wpf_UWB_GUI
                     }
                     else if (positionStatus == 1)
                     {
-                        fPositionClick = false;
+                        positionStatus = 2;
 
                         //nmi
                         //nma
@@ -212,6 +214,15 @@ namespace wpf_UWB_GUI
                             sendByte(0x0d);
 
                         }
+                    }
+                    else if (positionStatus == 2)
+                    {
+                        positionStatus = 3;
+                    }
+                    else if (positionStatus == 3)
+                    {
+                        fPositionClick = false;
+                        btn_getSetting.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     }
                 }
             }
@@ -240,6 +251,17 @@ namespace wpf_UWB_GUI
                 String mode = strTmp.Substring(strTmp.IndexOf("mode:") + 6);
                 Console.WriteLine("Mode : " + mode);
                 lbl_devMode.Content = mode;
+
+                if (mode.Contains("an (act,-)") || mode.Contains("ani (act,-)"))
+                {
+                    mGrid_position.Visibility = Visibility.Visible;
+                    //Console.WriteLine("mode : " + mode);
+                    //Console.WriteLine("Contains mode");
+                }
+                else
+                {
+                    mGrid_position.Visibility = Visibility.Hidden;
+                }
             }
 
             if (strTmp.Contains("label="))
@@ -307,8 +329,8 @@ namespace wpf_UWB_GUI
                 txt_pos_y.Text = spos_y.ToString();
                 txt_pos_z.Text = spos_z.ToString();
 
-                lbl_devPosition.Content = "x:" + spos_x.ToString() 
-                                        + "y:" + spos_y.ToString() 
+                lbl_devPosition.Content = "x:" + spos_x.ToString()
+                                        + "y:" + spos_y.ToString()
                                         + "z:" + spos_z.ToString();
             }
         }
@@ -317,7 +339,8 @@ namespace wpf_UWB_GUI
         {
             byte[] arByte = new byte[2];
             arByte[0] = tmpByte;
-            sp_Anchor.Write(arByte, 0, 1);
+            if (sp_Anchor.IsOpen)
+                sp_Anchor.Write(arByte, 0, 1);
         }
 
         public byte[] AddByteToArray(byte[] bArray, byte newByte)
@@ -387,6 +410,7 @@ namespace wpf_UWB_GUI
 
         private void connected_btn_Click(object sender, RoutedEventArgs e)
         {
+            mGrid_position.Visibility = Visibility.Hidden;
             //none select
             if (cbx_serialPort.SelectedIndex == -1) return;
             if (sp_Anchor.IsOpen) return;
@@ -413,6 +437,8 @@ namespace wpf_UWB_GUI
             sp_Anchor.Close();
 
             serialPort_Status(false);
+
+            mGrid_position.Visibility = Visibility.Hidden;
         }
 
         public void sp_listener_DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
