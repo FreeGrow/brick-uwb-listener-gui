@@ -139,7 +139,15 @@ namespace wpf_UWB_GUI
 
         private void btn_remove_Click(object sender, RoutedEventArgs e)
         {
-            devRemoveItemHandler(clList);
+            MessageBoxResult result = MessageBox.Show(clList.devSN + "을 지우시겠습니까\"?", "Remove", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    devRemoveItemHandler(clList);
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
         }
     }
 }
