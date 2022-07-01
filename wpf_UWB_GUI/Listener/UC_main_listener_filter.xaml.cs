@@ -32,7 +32,7 @@ namespace wpf_UWB_GUI
         String strSaveAveValue = "";
         String strSaveLpfValue = "";
         String strSavePath = "";
-        
+
         List<Control> listCursorControl = new List<Control>();
 
         public UC_main_listener_filter()
@@ -51,7 +51,7 @@ namespace wpf_UWB_GUI
             listCursorControl.Add(btn_stop);
             listCursorControl.Add(btn_filepath);
 
-            for(int i=0;i< listCursorControl.Count; i++)
+            for (int i = 0; i < listCursorControl.Count; i++)
             {
                 listCursorControl[i].MouseEnter += new MouseEventHandler(mouseEnterHandler);
                 listCursorControl[i].MouseLeave += new MouseEventHandler(mouseLeaveHandler);
@@ -149,7 +149,7 @@ namespace wpf_UWB_GUI
                         {
                             int maxCount = (int)slider_fliterSlider.Value;
 
-                            if(prevMaxCount != maxCount)
+                            if (prevMaxCount != maxCount)
                             {
                                 cl_Tmp.tag_ave_x.Clear();
                                 cl_Tmp.tag_ave_y.Clear();
@@ -207,6 +207,23 @@ namespace wpf_UWB_GUI
                             cl_Tmp.tag_lpf_y = Math.Round(cl_Tmp.tag_lpf_y, 4);
                             cl_Tmp.tag_lpf_z = Math.Round(cl_Tmp.tag_lpf_z, 4);
                         }
+
+
+                        String writeText = "";
+
+                        writeText = cl_Tmp.devSN + "," +
+                            string.Format("{0, 10:N2}", cl_Tmp.tag_pos_x) + "," +
+                            string.Format("{0, 10:N2}", cl_Tmp.tag_pos_y) + "," +
+                            string.Format("{0, 10:N2}", cl_Tmp.tag_pos_z);
+
+                        config.fn_RawTextWrite("", strSavePath, writeText);
+
+                        writeText = cl_Tmp.devSN + "," +
+                            string.Format("{0, 10:N2}", cl_Tmp.tag_lpf_x) + "," +
+                            string.Format("{0, 10:N2}", cl_Tmp.tag_lpf_y) + "," +
+                            string.Format("{0, 10:N2}", cl_Tmp.tag_lpf_z);
+
+                        config.fn_FilterTextWrite("", strSavePath, writeText);
 
                         //Console.WriteLine(strSaveRadio + " // " + cl_Tmp.devSN + " // " + cl_Tmp.tag_pos_x + " // " + cl_Tmp.tag_pos_y + " // " + cl_Tmp.tag_lpf_x + " // " + cl_Tmp.tag_lpf_y);
 

@@ -275,6 +275,7 @@ namespace wpf_UWB_GUI.Listener
                 }
 
                 cl_item.devType = "Tag";
+                cl_item.time = (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
             }
             else
             {
@@ -355,7 +356,6 @@ namespace wpf_UWB_GUI.Listener
                 }
 
                 tmpListener.devType = "Tag";
-
                 tmpListener.time = (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
 
                 cl_devList.Add(tmpListener);

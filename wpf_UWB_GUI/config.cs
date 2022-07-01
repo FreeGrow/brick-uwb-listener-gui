@@ -60,9 +60,10 @@ namespace wpf_UWB_GUI
         {
             return num_aliveGateway;
         }
-        public static byte[] StringToByte(string str) {
+        public static byte[] StringToByte(string str)
+        {
             byte[] StrByte = Encoding.UTF8.GetBytes(str);
-            return StrByte; 
+            return StrByte;
         }
         public static string ConvertByteToHexString(byte[] convertArr)
         {
@@ -97,6 +98,55 @@ namespace wpf_UWB_GUI
                 //Console.WriteLine("name : " + name);
                 if (name == formName) // FormTwo my form name as "FormTwo"
                     win.Close(); // check its open
+            }
+        }
+
+
+        //FilterWriteLOG
+        public static void fn_RawTextWrite(string TAG, String strSavePath, string str)
+        {
+            //2021_09_16_13~14_UWB_Filtered_Position.txt
+
+            string DirPath = strSavePath;
+            if (strSavePath.Length == 0)
+            {
+                DirPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\UWB\\";
+            }
+
+            string strFormat = "yyyy_MM_dd_HH~";
+            String textFileName = DateTime.Now.ToString(strFormat) + (int.Parse(DateTime.Now.ToString("HH")) + 1) + "_UWB_Raw_Position.txt";
+
+            string FilePath = DirPath + "\\" + textFileName;
+            string temp;
+
+            DirectoryInfo di = new DirectoryInfo(DirPath);
+            FileInfo fi = new FileInfo(FilePath);
+
+            try
+            {
+                if (!di.Exists) Directory.CreateDirectory(DirPath);
+                if (!fi.Exists)
+                {
+                    using (StreamWriter sw = new StreamWriter(FilePath))
+                    {
+                        temp = string.Format("[{0}] {1} {2}", DateTime.Now, TAG, str);
+                        sw.WriteLine(temp);
+                        sw.Close();
+                    }
+                }
+                else
+                {
+                    using (StreamWriter sw = File.AppendText(FilePath))
+                    {
+                        temp = string.Format("[{0}] {1} {2}", DateTime.Now, TAG, str);
+                        sw.WriteLine(temp);
+                        sw.Close();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                config.fn_ErrorFileWrite(TAG, "fn_TextWrite Error : " + e.ToString());
             }
         }
 

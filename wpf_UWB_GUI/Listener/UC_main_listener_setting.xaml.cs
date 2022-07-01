@@ -252,7 +252,7 @@ namespace wpf_UWB_GUI
                 Console.WriteLine("Mode : " + mode);
                 lbl_devMode.Content = mode;
 
-                if (mode.Contains("an (act,-)") || mode.Contains("ani (act,-)"))
+                if (mode.Contains("an (act,-)") || mode.Contains("ani (act,-)") || mode.Contains("ani (act,real)"))
                 {
                     mGrid_position.Visibility = Visibility.Visible;
                     //Console.WriteLine("mode : " + mode);
