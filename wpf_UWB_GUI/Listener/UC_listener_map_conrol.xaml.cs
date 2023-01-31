@@ -129,9 +129,6 @@ namespace wpf_UWB_GUI
             imageMapMarker.Height = imgHeight * zoom;
 
             fChange = false;
-
-            //Console.WriteLine("zoom : " + zoom);
-
         }
 
         const int checkTime_AddMarker = 1000;
@@ -233,9 +230,6 @@ namespace wpf_UWB_GUI
             listMarker.Add(mMarker);
             imageMapMarker.Children.Add(mMarker.mEllipse);
             imageMapMarker.Children.Add(mMarker.mLabel);
-
-            Console.WriteLine("addMarkerMap()");
-            Console.WriteLine(listMarker.Count);
         }
 
         //////////////////////

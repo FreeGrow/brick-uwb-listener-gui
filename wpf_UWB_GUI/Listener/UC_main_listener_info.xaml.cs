@@ -24,8 +24,6 @@ namespace wpf_UWB_GUI
 
         public UC_main_listener_info()
         {
-            Console.WriteLine("UC_main_listener_info()");
-
             InitializeComponent();
 
             Hyperlink hyperlink = new Hyperlink();
@@ -43,7 +41,6 @@ namespace wpf_UWB_GUI
 
         private void UC_main_listener_info_Loaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("UC_main_gateway_info_Loaded()");
 
         }
 

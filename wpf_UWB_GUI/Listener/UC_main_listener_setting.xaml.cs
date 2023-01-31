@@ -29,8 +29,6 @@ namespace wpf_UWB_GUI
 
         public UC_main_listener_setting()
         {
-            Console.WriteLine("UC_main_listener_setting()");
-
             InitializeComponent();
 
             listCursorControl.Add(cbx_serialPort);
@@ -67,7 +65,6 @@ namespace wpf_UWB_GUI
 
         private void UC_main_gateway_setting_Loaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("UC_main_gateway_com_Loaded()");
         }
 
         private void mouseEnterHandler(object sender, MouseEventArgs e)
@@ -195,9 +192,6 @@ namespace wpf_UWB_GUI
 
                         if ((bool)chk_initiator.IsChecked)
                         {
-                            Console.WriteLine("Set Checked True");
-                            Console.WriteLine("Send nmi");
-
                             sendByte((byte)'n');
                             sendByte((byte)'m');
                             sendByte((byte)'i');
@@ -205,9 +199,6 @@ namespace wpf_UWB_GUI
                         }
                         else
                         {
-                            Console.WriteLine("Set Checked False");
-                            Console.WriteLine("Send nma");
-
                             sendByte((byte)'n');
                             sendByte((byte)'m');
                             sendByte((byte)'a');
@@ -236,27 +227,21 @@ namespace wpf_UWB_GUI
             String strTmp = strList[0];
             strList.RemoveAt(0);
 
-            Console.WriteLine("strTmp : " + strTmp);
-
             if (strTmp.Contains("panid="))
             {
                 String panid = strTmp.Substring(strTmp.IndexOf("panid=") + 6, 5);
                 panid += "0";
-                Console.WriteLine("Panid : " + panid);
                 lbl_devPanid.Content = panid;
             }
 
             if (strTmp.Contains("mode:"))
             {
                 String mode = strTmp.Substring(strTmp.IndexOf("mode:") + 6);
-                Console.WriteLine("Mode : " + mode);
                 lbl_devMode.Content = mode;
 
                 if (mode.Contains("an (act,-)") || mode.Contains("ani (act,-)") || mode.Contains("ani (act,real)"))
                 {
                     mGrid_position.Visibility = Visibility.Visible;
-                    //Console.WriteLine("mode : " + mode);
-                    //Console.WriteLine("Contains mode");
                 }
                 else
                 {
@@ -267,14 +252,12 @@ namespace wpf_UWB_GUI
             if (strTmp.Contains("label="))
             {
                 String label = strTmp.Substring(strTmp.IndexOf("label=") + 6, 6);
-                Console.WriteLine("label : " + label);
                 lbl_devName.Content = label;
             }
 
             if (strTmp.Contains("init="))
             {
                 String init = strTmp.Substring(strTmp.IndexOf("init=") + 5, 1);
-                Console.WriteLine("init : " + init);
                 if (init.Contains("0"))
                 {
                     lbl_devInit.Content = "false";
@@ -291,8 +274,6 @@ namespace wpf_UWB_GUI
             if (strTmp.Contains("apg:"))
             {
                 String pos = strTmp.Substring(strTmp.IndexOf("apg:") + 5);
-                Console.WriteLine("pos : " + pos);
-                //lbl_devPosition.Content = pos;
 
                 char[] split1 = { ' ' };
                 string[] result = pos.Split(split1);
@@ -316,10 +297,6 @@ namespace wpf_UWB_GUI
                 fpos_x = fpos_x / 100;
                 fpos_y = fpos_y / 100;
                 fpos_z = fpos_z / 100;
-
-                Console.WriteLine("fpos_x : " + fpos_x);
-                Console.WriteLine("fpos_y : " + fpos_y);
-                Console.WriteLine("fpos_z : " + fpos_z);
 
                 string spos_x = string.Format("{0:0.00}", fpos_x);
                 string spos_y = string.Format("{0:0.00}", fpos_y);

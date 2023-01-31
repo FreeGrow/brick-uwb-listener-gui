@@ -127,13 +127,6 @@ namespace wpf_UWB_GUI
             set_clList(clTmp);
             Update();
 
-            Console.WriteLine("DeviceWindow_DevEditHandler()");
-            Console.WriteLine(cl_List.devSN + ":" +
-                cl_List.devTagName + ":"
-                + cl_List.tag_pos_x + ":"
-                + cl_List.tag_pos_y + ":"
-                + cl_List.tag_pos_z);
-
             devEditItemHandler(clTmp);
         }
 

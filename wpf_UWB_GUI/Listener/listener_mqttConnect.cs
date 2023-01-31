@@ -38,7 +38,6 @@ namespace wpf_UWB_GUI.Listener
         {
             try
             {
-                //String receiveData = sp_listener.ReadExisting();
                 String receiveData = sp_listener.ReadLine();
                 mqttParsing.sp_listener_DataReceivedHandler(receiveData);
             }
@@ -46,9 +45,6 @@ namespace wpf_UWB_GUI.Listener
             {
 
             }
-
-            //Console.Write("sp_listener_DataReceivedHandler()");
-            //Console.WriteLine(receiveData);
         }
 
         public List<class_listener_list> getList()
@@ -73,7 +69,6 @@ namespace wpf_UWB_GUI.Listener
         public void sp_AnchorList()
         {
             if (!sp_listener.IsOpen) return;
-            Console.WriteLine("sp_AnchorList()");
             byte[] arByte = new byte[10];
             arByte[0] = (byte)'l';
             arByte[1] = (byte)'a';
@@ -84,7 +79,6 @@ namespace wpf_UWB_GUI.Listener
         public void sp_lecSend()
         {
             if (!sp_listener.IsOpen) return;
-            Console.WriteLine("sp_lecSend()");
             byte[] arByte = new byte[10];
             arByte[0] = (byte)'l';
             arByte[1] = (byte)'e';
@@ -96,7 +90,6 @@ namespace wpf_UWB_GUI.Listener
         public void sp_systemInfo()
         {
             if (!sp_listener.IsOpen) return;
-            Console.WriteLine("sp_systemInfo()");
             byte[] arByte = new byte[10];
             arByte[0] = (byte)'s';
             arByte[1] = (byte)'i';
@@ -107,21 +100,13 @@ namespace wpf_UWB_GUI.Listener
         public void sp_EnterTwice()
         {
             if (!sp_listener.IsOpen) return;
-            Console.WriteLine("sp_EnterTwice()");
             byte[] arByte = new byte[10];
             arByte[0] = 0x0d;
             sp_listener.Write(arByte, 0, 1);
-            //Thread.Sleep(100);
-
-            //sp_systemInfo();
-
-            //arByte[0] = 0x0d;
-            //sp_listener.Write(arByte, 0, 1);
         }
 
         public void sp_Connect()
         {
-            Console.WriteLine("sp_listener.IsOpen : " + sp_listener.IsOpen);
             if (!sp_listener.IsOpen)
                 sp_listener.Open();
             else

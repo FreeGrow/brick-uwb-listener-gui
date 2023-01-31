@@ -37,8 +37,6 @@ namespace wpf_UWB_GUI
 
         public UC_main_listener_filter()
         {
-            Console.WriteLine("UC_main_listener_filter()");
-
             InitializeComponent();
 
             listCursorControl.Add(chk_none);
@@ -73,8 +71,6 @@ namespace wpf_UWB_GUI
             strSaveAveValue = words[2];
             strSaveLpfValue = words[3];
             strSavePath = words[4];
-
-            Console.WriteLine("str_filterValue : " + str_filterValue);
 
             if (strSaveRadio == "0")
             {
@@ -225,8 +221,6 @@ namespace wpf_UWB_GUI
 
                         config.fn_FilterTextWrite("", strSavePath, writeText);
 
-                        //Console.WriteLine(strSaveRadio + " // " + cl_Tmp.devSN + " // " + cl_Tmp.tag_pos_x + " // " + cl_Tmp.tag_pos_y + " // " + cl_Tmp.tag_lpf_x + " // " + cl_Tmp.tag_lpf_y);
-
                         setFilterHandler(cl_Tmp);
                     }
                 }
@@ -235,7 +229,6 @@ namespace wpf_UWB_GUI
 
         private void UC_main_listener_filter_Loaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("UC_main_listener_filter_Loaded()");
 
         }
 
@@ -391,20 +384,16 @@ namespace wpf_UWB_GUI
         {
             if (chk_movingAverage.IsChecked == true)
             {
-                //Console.WriteLine("radio_ave");
                 strSaveAveValue = slider_fliterSlider.Value + "";
             }
             if (chk_lpf.IsChecked == true)
             {
-                //Console.WriteLine("radio_lpf");
                 strSaveLpfValue = slider_fliterSlider.Value + "";
             }
 
             label_filterValue.Content = slider_fliterSlider.Value.ToString();
 
             String tmpStart = "0";
-            //if (fStart) tmpStart = "1";
-            //else tmpStart = "0";
             Properties.Settings.Default.filter_value = tmpStart + "#" + strSaveRadio + "#" + strSaveAveValue + "#" + strSaveLpfValue + "#" + strSavePath;
             Properties.Settings.Default.Save();
         }
@@ -432,8 +421,6 @@ namespace wpf_UWB_GUI
             fStart = true;
 
             String tmpStart = "0";
-            //if (fStart) tmpStart = "1";
-            //else tmpStart = "0";
             Properties.Settings.Default.filter_value = tmpStart + "#" + strSaveRadio + "#" + strSaveAveValue + "#" + strSaveLpfValue + "#" + strSavePath;
             Properties.Settings.Default.Save();
         }

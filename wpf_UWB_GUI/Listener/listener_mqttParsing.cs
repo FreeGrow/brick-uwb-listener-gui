@@ -21,7 +21,6 @@ namespace wpf_UWB_GUI.Listener
 
         public void init()
         {
-            //timer10hz.Interval = TimeSpan.FromMilliseconds(1000);
             timer10hz.Interval = TimeSpan.FromMilliseconds(0.01);
             timer10hz.Tick += new EventHandler(timer10hz_Tick);
             timer10hz.Start();
@@ -34,13 +33,8 @@ namespace wpf_UWB_GUI.Listener
         public void sp_listener_DataReceivedHandler(String receiveData)
         {
             getSerialData.Add(receiveData);
-
-            //Console.WriteLine(" sp_listener_DataReceivedHandler : " + receiveData);
         }
 
-        bool f_LaStart = false;
-        long prevLaStartMillis = 0;
-        bool fSystemInfo = false;
         long prevSystemInfoMillis = 0;
         String prevStrReceiveData = "";
 
@@ -59,24 +53,11 @@ namespace wpf_UWB_GUI.Listener
                 if ((long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds - prevSystemInfoMillis > 1000 * 5)
                 {
                     prevSystemInfoMillis = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
-                    Console.WriteLine("send Lec Check : ");
                     lecSend();
                 }
 
                 prevStrReceiveData = strReceiveData;
             }
-
-
-            //if (strReceiveData.Length == 0) return;
-
-
-            //POS,0,0200,0.08,3.25,-1.05,58,x0D
-            //POS,0,0200,0.09,3.24,-1.06,57,x0D
-            //POS,0,0200,0.07,3.26,-1.04,56,x0D
-            //POS,0,0200,0.11,3.24,-1.10,57,x0D
-            //POS,0,0200,0.10,3.24,-1.14,53,x0D
-            //POS,0,0200,nan,nan,nan,0,x0D
-            //POS,0,0200,0.11,3.25,-1.12,59,x0D
 
             if (getSerialData.Count < 1)
             {
@@ -92,51 +73,6 @@ namespace wpf_UWB_GUI.Listener
                 parseData(strParse);
             }
 
-
-
-            //SYSTEM INFO UART
-            //if (strReceiveData.Contains("dwm>") && fSystemInfo == false)
-            //{
-            //    Console.WriteLine("strReceiveData.Contains(dwm > )");
-            //    fSystemInfo = true;
-            //    systemInfo();
-            //    strReceiveData = "";
-            //}
-
-            //if (fSystemInfo)
-            //{
-            //    Console.WriteLine("fSystemInfo : " + strReceiveData.Length + " :: " + prevStrReceiveData.Length);
-            //    if(strReceiveData.Length != prevStrReceiveData.Length)
-            //    {
-            //        prevSystemInfoMillis = (long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds;
-            //    }
-
-            //    if((long)(DateTime.UtcNow - config.Jan1st1970).TotalMilliseconds - prevSystemInfoMillis > 1000 * 5)
-            //    {
-            //        Console.WriteLine("strReceiveData : ");
-            //        Console.WriteLine(strReceiveData);
-
-            //        strReceiveData = "";
-            //        //fSystemInfo = false;
-            //    }
-
-            //    prevStrReceiveData = strReceiveData;
-
-            //    //[000003.420 INF] sys: fw2 fw_ver = x01030001 cfg_ver = x00010700
-            //    //[000003.420 INF] uwb0: panid = xD438 addr = xDECA3F7657B15DA0
-            //    //[000003.430 INF] mode: an(pasv, -)
-            //    //[000003.430 INF] uwbmac: connected
-            //    //[000003.430 INF] uwbmac: bh disconnected
-            //    //[000003.440 INF] cfg: sync = 0 fwup = 0 ble = 1 leds = 0 init = 0 upd_rate_stat = 120 label = DW5DA0
-            //    //[000003.440 INF] enc: off
-            //    //[000003.450 INF] ble: addr = D2:D7: 65:DB: 99:E4
-
-            //    return;
-            //}
-
-
-            //SET ANCHOR
-            //0) id = 0000000000008117 seat = 5 seens = 220 rssi = -92 cl = 00000000 nbr = 00000000 pos = 5.90:0.00:0.00
             if (strParse.IndexOf("id=") != -1 &&
                 strParse.IndexOf("seat=") != -1 &&
                 strParse.IndexOf("seens=") != -1 &&
@@ -145,8 +81,6 @@ namespace wpf_UWB_GUI.Listener
                 strParse.IndexOf("nbr=") != -1 &&
                 strParse.IndexOf("pos=") != -1)
             {
-                Console.WriteLine("get Anchor () ");
-
                 class_listener_list clTmp = new class_listener_list();
                 clTmp.devSN = "DW" + strParse.Substring(strParse.IndexOf("id=") + 15, 4);
 
@@ -175,12 +109,8 @@ namespace wpf_UWB_GUI.Listener
                     clDevice.time = clTmp.time;
                 }
             }
-
         }
 
-
-        //GET POS DATA PARSING
-        //POS,0,0200,0.11,3.25,-1.12,59,x0D
         private void parseData(String mStr)
         {
             int cntChk = mStr.Split(',').Length - 1;
@@ -191,9 +121,6 @@ namespace wpf_UWB_GUI.Listener
 
             char[] split1 = { ',' };
             string[] result = mStr.Split(split1);
-
-            //if (result.Length != 8) return;
-            //if (result[2].Length != 4) return;
 
             int num_result_Tag = cl_devList.FindIndex(x => x.devSN.Equals("DW" + result[2]));
 

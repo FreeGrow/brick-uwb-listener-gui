@@ -38,8 +38,6 @@ namespace wpf_UWB_GUI
 
         public UC_main_listener_device()
         {
-            Console.WriteLine("UC_main_listener_device()");
-
             InitializeComponent();
 
             listCursorControl.Add(btn_autoAdd);
@@ -74,7 +72,6 @@ namespace wpf_UWB_GUI
 
         private void UC_main_listener_device_Loaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("UC_main_listener_device_Loaded()");
         }
 
 
@@ -141,16 +138,13 @@ namespace wpf_UWB_GUI
                 if (nowTime > 1000 * 1)
                 {
                     List<class_listener_list> anchorList = new List<class_listener_list>();
-                    Console.WriteLine("getAnchorList()");
                     anchorList = getAnchorList();
                     if (anchorList == null)     return;
                     if (anchorList.Count == 0)  return;
                     if (prevAutoAnchor != anchorList[0].time)
                     {
-                        Console.WriteLine("anchorList.Count : " + anchorList.Count);
                         for (int i = 0; i < anchorList.Count; i++)
                         {
-                            //Console.WriteLine(i + ":" + anchorList[i].devSN + ":" + anchorList[i].tag_pos_x + ":" + anchorList[i].tag_pos_y + ":" + anchorList[i].tag_pos_z);
                             DeviceWindow_DevAddHandler(anchorList[i]);
                         }
                         prevAutoAnchor = anchorList[0].time;
@@ -232,7 +226,6 @@ namespace wpf_UWB_GUI
             listPanelItem.Children.Clear();
 
             uc_deviceList.Clear();
-            //uwbList.Clear();
         }
 
         private void DeviceWindow_ColorHandler(class_listener_list mcl_List)
@@ -286,8 +279,6 @@ namespace wpf_UWB_GUI
         //DeviceEdit callback Method
         private void DeviceWindow_RemoveItemHandler(class_listener_list cl_List)
         {
-            Console.WriteLine("DeviceWindow_RemoveItemHandler()");
-
             int resultNum = uc_deviceList.FindIndex(x => x.get_clList().devSN.Equals(cl_List.devSN));
 
             uc_deviceList.RemoveAt(resultNum);

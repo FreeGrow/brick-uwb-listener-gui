@@ -26,6 +26,7 @@
             <DockPanel
            VerticalAlignment="Top"
            LastChildFill="True" Background="#FF252A2C">
+                <Label Content="MYLO - PC" Foreground="#DDFFFFFF" VerticalAlignment="Center" FontSize="15" Margin="10,0,0,0"/>
 
                 <Grid DockPanel.Dock="Right"
           HorizontalAlignment="Right">
@@ -33,7 +34,6 @@
                     <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center">
-
                         <Button x:Name="MinimizeButton"
                     KeyboardNavigation.IsTabStop="False"
                     Style="{StaticResource MinimizeButtonStyle}" Click="MinimizeWindow" />

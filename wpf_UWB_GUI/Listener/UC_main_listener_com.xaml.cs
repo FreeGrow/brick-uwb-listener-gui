@@ -43,8 +43,6 @@ namespace wpf_UWB_GUI
 
         public UC_main_listener_com()
         {
-            Console.WriteLine("UC_main_listener_com()");
-
             InitializeComponent();
 
             listCursorControl.Add(cbx_serialPort);
@@ -80,8 +78,6 @@ namespace wpf_UWB_GUI
 
         private void UC_main_gateway_com_Loaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("UC_main_gateway_com_Loaded()");
-
         }
 
         private void timer10hz_Tick(object sender, EventArgs e)
@@ -167,22 +163,6 @@ namespace wpf_UWB_GUI
             setSerialHandler(null);
 
             serialPort_Status(false);
-        }
-
-        //JSON SAVE Setting DATA
-        private void json_generate()
-        {
-            string json = JsonConvert.SerializeObject(mainSettingData);
-            Properties.Settings.Default.JSON_Setting_Info = json;
-            Properties.Settings.Default.Save();
-        }
-
-        //JSON LOAD Setting DATA
-        private void request_json()
-        {
-            string json_setting_string = Properties.Settings.Default.JSON_Setting_Info;
-            var setting_data = JsonConvert.DeserializeObject<Main_Setting_Data>(json_setting_string);
-            mainSettingData = setting_data;
         }
 
         private void cbx_serialPort_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)

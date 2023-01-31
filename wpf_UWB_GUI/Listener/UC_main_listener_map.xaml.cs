@@ -29,17 +29,10 @@ namespace wpf_UWB_GUI
 
         DispatcherTimer timer10hz = new DispatcherTimer();
 
-        String strSaveRadio = "";
-        String strSaveAveValue = "";
-        String strSaveLpfValue = "";
-        String strSavePath = "";
-
         List<Control> listCursorControl = new List<Control>();
 
         public UC_main_listener_map()
         {
-            Console.WriteLine("UC_main_listener_map()");
-
             InitializeComponent();
 
             string filePath = Properties.Settings.Default.map_value;
@@ -154,7 +147,6 @@ namespace wpf_UWB_GUI
 
         private void UC_main_listener_map_Loaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("UC_main_listener_map_Loaded()");
         }
 
         private void map_connect_state(bool fState)
@@ -295,8 +287,6 @@ namespace wpf_UWB_GUI
             thick.Top = thick.Top - deltaY * 1.5;
             ucMapControl.Margin = thick;
 
-            //Console.WriteLine("x : " + p.X + "  y :  " + p.Y);
-
             prevP = p;
         }
 
@@ -308,28 +298,6 @@ namespace wpf_UWB_GUI
         private void listener_Map_Page_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             ucMapControl.FormZoomLevel(e.Delta);
-        }
-
-        private void listener_Map_Page_SizeChagned(object sender, SizeChangedEventArgs e)
-        {
-            //mMapViewLayout.Width = e.NewSize.Width - 10;
-            //mMapViewLayout.Height = e.NewSize.Height - 180;
-
-            //if (ucMapControl != null)
-            //    ucMapControl.UC_FormSize(mMapViewLayout.Width, mMapViewLayout.Height);
-
-            ////UC_map_control Size CHange Start
-            //Thickness thick = btn_zoom_fit.Margin;
-            //thick.Left = e.NewSize.Width - 75 - 33;
-            //btn_zoom_fit.Margin = thick;
-
-            //thick = btn_zoom_plus.Margin;
-            //thick.Left = e.NewSize.Width - 75 - 33;
-            //btn_zoom_plus.Margin = thick;
-
-            //thick = btn_zoom_minus.Margin;
-            //thick.Left = e.NewSize.Width - 75 - 33;
-            //btn_zoom_minus.Margin = thick;
         }
     }
 }

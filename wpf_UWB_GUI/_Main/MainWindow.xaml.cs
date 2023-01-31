@@ -10,16 +10,7 @@ using static wpf_UWB_GUI.UC_Menu_listener;
 
 namespace wpf_UWB_GUI
 {
-    /// <summary>
-    /// MainWindow.xaml에 대한 상호 작용 논리
-    /// </summary>
-
-    //Menu_gateway_page
-
-    //Get Connect State
     public delegate bool MainGetConnectStateHandler();
-
-    //Get Set Remove Parse Data
     public delegate List<class_listener_list> MainGetAnchorListHandler();
     public delegate void MainClickAutoAnchorHandler();
     public delegate void MainRemoveDataHandler(String mdevSN);
@@ -32,22 +23,12 @@ namespace wpf_UWB_GUI
     {
         String TAG = "MainWindow";
 
-        //타이틀 게이트웨이
-        const int StateTitleGateway = 1;
-        //타이틀 리스너
         const int StateTitleListener = 2;
-
-        //통신 설정
         const int StateTab_Gat_com = 1;
-        //필터 설정
         const int StateTab_Gat_fil = 2;
-        //장비 관리
         const int StateTab_Gat_dev = 3;
-        //맵
         const int StateTab_Gat_map = 4;
-        //전체 설정
         const int StateTab_Gat_set = 5;
-        //프로그램 정보
         const int StateTab_Gat_sys = 6;
 
         int nowTitleState = StateTitleListener;
@@ -60,10 +41,8 @@ namespace wpf_UWB_GUI
         public static Frame _frame_listener_com;
         public static Frame _frame_listener_filter;
 
-        //MENU BAR
         UC_Menu_listener ucMenuListener = new UC_Menu_listener();
 
-        //LISTENER MAIN PAGE
         UC_main_listener_com ucMainListenerCom = new UC_main_listener_com();
         UC_main_listener_filter ucMainListenerFilter = new UC_main_listener_filter();
         UC_main_listener_device ucMainListenerDevice = new UC_main_listener_device();
