@@ -10,8 +10,6 @@
 >Version 16.8.3
   
   
-  <iframe width="956" height="538" src="https://www.youtube.com/embed/ozv4q2ov3Mk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  
 
 # Communication Page
 통신 설정 페이지  
@@ -56,3 +54,9 @@ YOUTUBE : https://www.youtube.com/channel/UCtsx-Lch2rG-ziyzGlk2AJQ
   
   
 email : robofrien@gmail.com
+
+
+
+  
+[![Video Label](http://img.youtube.com/vi/fSDhYLPtQ_w/0.jpg)](https://youtu.be/fSDhYLPtQ_w?t=0s)
+
