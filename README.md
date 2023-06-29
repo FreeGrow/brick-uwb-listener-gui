@@ -44,16 +44,16 @@
 
 ------------
 
-Download .exe : https://github.com/ROBOFRIEN/UWB_Listener/wiki
+Download .exe : https://github.com/ROBOFRIEN/UWB_Listener.git
 
-HOMEPAGE : https://www.robofrien.com/
+HOMEPAGE : https://www.brick.freegrow.io
 
 BLOG : https://blog.naver.com/inc_robo
 
 YOUTUBE : https://www.youtube.com/channel/UCtsx-Lch2rG-ziyzGlk2AJQ
   
   
-email : robofrien@gmail.com
+email : developers@freegrow.io
 
 
 
